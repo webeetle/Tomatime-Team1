@@ -4,7 +4,7 @@ import Login from "../Login";
 import Register from "../Register";
 
 function BackGround() {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
 
   return (
     <>

@@ -33,7 +33,7 @@ function Register({ changeStep }) {
 
         <div class="container-link">
           <span className="link">
-            Already have an account?
+            Already have an account?&nbsp;
             <a href="#" className="switch-link" onClick={() => changeStep()}>
               Login now
             </a>
