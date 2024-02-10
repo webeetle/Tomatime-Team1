@@ -31,7 +31,7 @@ exports.addTask = async (req, res) => {
   if (id && title && description) {
     try {
       const [task] = databasePool.execute(
-        "INSERT INTO Task(title , description, date_of_creation, user_id VALUES (?, ?, NOW(), ?)",
+        "INSERT INTO Task(title , description, date_of_creation, state, user_id) VALUES (?, ?, NOW(), 'TODO', ?)",
         [title, description, id]
       );
       return res.status(200).json({
