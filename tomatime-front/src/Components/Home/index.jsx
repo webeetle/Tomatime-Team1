@@ -1,6 +1,9 @@
 import React from "react";
 import "./index.css";
 import Counter from "../Counter";
+import ToDoList from "../ToDoList";
+import AnotherList from "../AnotherList";
+import DoneList from "../DoneList";
 
 const startSeconds = 60;
 const startMinutes = 25;
@@ -39,6 +42,13 @@ function Home(props) {
           <div className="container-div">
             <div className="left-container">
               <span className="title-left">TO DO</span>
+              <dl>
+                <dt>
+                  <ToDoList />
+                  <ToDoList />
+                  <AnotherList />
+                </dt>
+              </dl>
             </div>
             <div className="central-container">
               <span className="title-center">TIME TO FOCUS</span>
@@ -64,6 +74,7 @@ function Home(props) {
             </div>
             <div className="right-container">
               <span className="title-right">DONE</span>
+              <DoneList />
             </div>
           </div>
 

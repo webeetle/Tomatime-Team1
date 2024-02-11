@@ -1,0 +1,21 @@
+.container-done-list {
+  display: flex;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 4%;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.done-list {
+  width: 27px;
+  color: #ffde59;
+}
+
+.msg-list {
+  color: #d9391e;
+  font-size: small;
+  margin-right: auto;
+  margin-left: 2.5%;
+}

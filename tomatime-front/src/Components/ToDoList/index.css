@@ -1,0 +1,24 @@
+.container-list {
+  display: flex;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 4%;
+}
+
+.check-list {
+  width: 27px;
+  color: #d9391e;
+}
+.msg-list {
+  color: #d9391e;
+  font-size: small;
+  margin-right: auto;
+  margin-left: 2.5%;
+}
+
+.arrow-list {
+  margin-left: auto;
+  color: #d9391e;
+  margin-right: 5%;
+}
