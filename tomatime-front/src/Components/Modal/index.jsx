@@ -13,8 +13,8 @@ function Modal() {
   };
 
   return (
-    <div>
-      <button onClick={openModal}>Add task</button>
+    <div className="modal-main">
+      <span onClick={openModal} className="msg-list" >Add task</span>
 
       {isOpen && (
         <div className="modal-overlay">

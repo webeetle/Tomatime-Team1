@@ -11,8 +11,8 @@ function BackGround() {
       <div className="background"></div>
       <div className="tomatime"></div>
       <div className="break"></div>
-      {step == 0 && <Register changeStep={() => setStep(1)} />}
-      {step == 1 && <Login changeStep={() => setStep(0)} />}
+      {/* {step == 0 && <Register changeStep={() => setStep(1)} />}
+      {step == 1 && <Login changeStep={() => setStep(0)} />} */}
     </>
   );
 }

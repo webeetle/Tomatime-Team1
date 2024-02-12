@@ -9,6 +9,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 90;
+}
+
+.modal-main{
+  width: 5rem;
+  padding: 10px;
 }
 
 .modal {
@@ -36,11 +42,13 @@ textarea {
   padding: 2%;
   font-size: large;
   margin-top: 5%;
+  resize: none;
 }
 
 .position-button {
   display: flex;
   justify-content: space-between;
+  padding: 10px;
 }
 
 .button-cancel {
@@ -85,4 +93,11 @@ textarea {
   background-image: url("/src/imgs/pencil.png");
   background-repeat: no-repeat;
   margin: 8px;
+}
+
+.msg-list {
+  color: #d9391e;
+  font-size: small;
+  margin-right: auto;
+  margin-left: 2.5%;
 }

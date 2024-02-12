@@ -1,31 +1,30 @@
 import React from "react";
 import "./index.css";
-
+import { Link } from "react-router-dom";
+import BackGround from "../BackGround";
 function Login({ changeStep }) {
   return (
     <>
+      <BackGround />
       <div className="popup_login">
         <span className="login">LOGIN</span>
 
         <div>
-          <input type="text" placeholder="Name" className="form"></input>
-
-          <input
-            type="password"
-            placeholder="Password"
-            className="form"
-          ></input>
+          <input type="text" placeholder="Name" className="form" />
+          <input type="password" placeholder="Password" className="form" />
         </div>
-        <button class="login_btn">
-          <span class="text_btn">LOGIN</span>
-        </button>
+        
+          <button className="login_btn">
+            <Link to ="/home" ><span className="text_btn">LOGIN</span></Link>
+          </button>
+        
 
-        <div class="container-link">
+        <div className="container-link">
           <span className="link">
             Not registed yet?&nbsp;
-            <a href="#" className="switch-link" onClick={() => changeStep()}>
+            <Link to="/register" className="switch-link">
               Register now
-            </a>
+            </Link>
           </span>
         </div>
       </div>

@@ -1,9 +1,12 @@
 import React from "react";
 import "./index.css";
+import { Link } from "react-router-dom";
+import BackGround from "../BackGround";
 
 function Register({ changeStep }) {
   return (
     <>
+      <BackGround />
       <div className="popup_register">
         <span className="register">SIGN IN</span>
 
@@ -34,9 +37,9 @@ function Register({ changeStep }) {
         <div class="container-link">
           <span className="link">
             Already have an account?&nbsp;
-            <a href="#" className="switch-link" onClick={() => changeStep()}>
+            <Link to="/login" className="switch-link">
               Login now
-            </a>
+            </Link>
           </span>
         </div>
       </div>

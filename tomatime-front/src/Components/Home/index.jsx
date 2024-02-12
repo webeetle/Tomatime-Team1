@@ -18,7 +18,7 @@ function Home(props) {
     <>
       <div className="home-container">
         <div className="navbar">
-          <div class="tomatime-img"></div>
+          <div className="tomatime-img"></div>
           <div className="counter-icons">
             <Counter
               className={"todoTask"}
@@ -36,7 +36,7 @@ function Home(props) {
               number={0}
             />
           </div>
-          <div class="img-icon"></div>
+          <div className="img-icon"></div>
         </div>
         <div className="main-container">
           <div className="container-div">
@@ -63,11 +63,11 @@ function Home(props) {
               </div>
               <span className="uptitle-working">WORKING AT</span>
               <div className="working-rectangle"></div>
-              <div class="final-center">
-                <button class="left-final">
+              <div className="final-center">
+                <button className="left-final">
                   <span>←To do</span>
                 </button>
-                <button class="right-final">
+                <button className="right-final">
                   <span>Done→</span>
                 </button>
               </div>
