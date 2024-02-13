@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import "./index.css"; // Importa il file CSS per lo stile della modale
+import "./index.css";
+import ToDoList from "./Components/ToDoList";
+import "./Components/ToDoList/index.css";
 
-function Modal() {
+function DeleteModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
@@ -14,23 +16,28 @@ function Modal() {
 
   return (
     <div className="modal-main">
-      <span onClick={openModal} className="msg-list" >Add task</span>
-
+      <button onClick={openModal} className="basket"></button>
       {isOpen && (
         <div className="modal-overlay">
           <div className="modal">
-            <div className="modal-title">
-              <div class="image"></div>
-              <span class="title-text">Send message</span>
+            <div>
+              <span className="title-text">Delete task</span>
             </div>
-            <textarea placeholder="Send a message to Tony:see you tomorrow?"></textarea>
+            <div>
+              <span className="subtitle-text">
+                Are you sure you want to delete this task?
+              </span>
+            </div>
+            <div className="description">
+              <ToDoList />
+            </div>
             <div className="position-button">
               <div></div>
               <div>
                 <button className="button-cancel" onClick={closeModal}>
                   Cancel
                 </button>
-                <button className="button-add">Add task</button>
+                <button className="button-del">Delete</button>
               </div>
             </div>
           </div>
@@ -40,4 +47,4 @@ function Modal() {
   );
 }
 
-export default Modal;
+export default DeleteModal;

@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import Modal from "../Modal";
+import Modal from "../WriteModal";
 
 function AnotherList() {
   return (
