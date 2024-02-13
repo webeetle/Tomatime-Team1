@@ -12,12 +12,7 @@
   z-index: 90;
 }
 
-.modal-main {
-  width: 5rem;
-  padding: 10px;
-}
-
-.modal {
+/* .modal {
   background-color: white;
   box-shadow: 0px 3px 6px #00000029;
   opacity: 1;
@@ -26,7 +21,7 @@
   border-radius: 15px;
   width: 600px;
   height: 330px;
-}
+} */
 
 .modal-title {
   display: flex;
@@ -44,14 +39,7 @@ textarea {
   margin-top: 5%;
   resize: none;
 }
-
-.position-button {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-}
-
-.button-cancel {
+button .button-cancel {
   color: #d9391e;
   border: 1px solid #d9391e;
   margin-right: 10px;

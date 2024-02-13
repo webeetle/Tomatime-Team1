@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import Modal from "../WriteModal";
+import WriteModal from "../WriteModal";
 
 function AnotherList() {
   return (
@@ -22,7 +22,7 @@ function AnotherList() {
             />
           </svg>
         </div>
-        <Modal />
+        <WriteModal />
         {/* <span className="msg-list" >Add Task</span> */}
       </div>
     </>

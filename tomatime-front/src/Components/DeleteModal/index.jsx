@@ -1,23 +1,24 @@
 import React, { useState } from "react";
 import "./index.css";
-import ToDoList from "./Components/ToDoList";
-import "./Components/ToDoList/index.css";
+import ToDoList from "../ToDoList";
 
 function DeleteModal() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
-  const openModal = () => {
-    setIsOpen(true);
+  const openDeleteModal = () => {
+    setIsDeleteOpen(true);
   };
 
-  const closeModal = () => {
-    setIsOpen(false);
+  const closeDeleteModal = () => {
+    setIsDeleteOpen(false);
   };
 
   return (
-    <div className="modal-main">
-      <button onClick={openModal} className="basket"></button>
-      {isOpen && (
+    <>
+      <button onClick={openDeleteModal} className="basket">
+        Cancella
+      </button>
+      {isDeleteOpen && (
         <div className="modal-overlay">
           <div className="modal">
             <div>
@@ -34,7 +35,7 @@ function DeleteModal() {
             <div className="position-button">
               <div></div>
               <div>
-                <button className="button-cancel" onClick={closeModal}>
+                <button className="button-cancel" onClick={closeDeleteModal}>
                   Cancel
                 </button>
                 <button className="button-del">Delete</button>
@@ -43,7 +44,7 @@ function DeleteModal() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

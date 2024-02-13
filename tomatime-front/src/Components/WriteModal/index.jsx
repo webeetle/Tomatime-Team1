@@ -1,22 +1,25 @@
 import React, { useState } from "react";
 import "./index.css";
+import DeleteModal from "../DeleteModal";
 
 function WriteModal() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isWriteOpen, setIsWriteOpen] = useState(false);
 
-  const openModal = () => {
-    setIsOpen(true);
+  const openWriteModal = () => {
+    setIsWriteOpen(true);
   };
 
-  const closeModal = () => {};
+  const closeWriteModal = () => {
+    setIsOpen(false);
+  };
 
   return (
-    <div className="modal-main">
-      <span onClick={openModal} className="msg-list">
+    <>
+      <span onClick={openWriteModal} className="msg-list">
         Add task
       </span>
 
-      {isOpen && (
+      {isWriteOpen && (
         <div className="modal-overlay">
           <div className="modal">
             <div className="modal-title">
@@ -27,8 +30,8 @@ function WriteModal() {
             <div className="position-button">
               <div></div>
               <div>
-                <button className="button-cancel" onClick={closeModal}>
-                  Cancel
+                <button className="button-cancel" onClick={closeWriteModal}>
+                  <DeleteModal />
                 </button>
                 <button className="button-add">Add task</button>
               </div>
@@ -36,7 +39,7 @@ function WriteModal() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
