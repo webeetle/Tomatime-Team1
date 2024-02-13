@@ -24,3 +24,7 @@ body {
   height: 100%;
   font-family: "Sora";
 }
+
+button:hover {
+  cursor: pointer;
+}

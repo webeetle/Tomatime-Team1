@@ -15,31 +15,30 @@ function DeleteModal() {
 
   return (
     <>
-      <button onClick={openDeleteModal} className="basket">
-        Cancella
-      </button>
+      <button onClick={openDeleteModal}>Cancella</button>
       {isDeleteOpen && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <div>
-              <span className="title-text">Delete task</span>
-            </div>
-            <div>
-              <span className="subtitle-text">
+        <div className="modal-overlay-delete">
+          <div className="modal-delete">
+            <div className="container-title-delete">
+              <span className="title-text-delete">Delete task</span>
+
+              <span className="subtitle-text-delete">
                 Are you sure you want to delete this task?
               </span>
-            </div>
-            <div className="description">
-              <ToDoList />
-            </div>
-            <div className="position-button">
-              <div></div>
-              <div>
-                <button className="button-cancel" onClick={closeDeleteModal}>
-                  Cancel
-                </button>
-                <button className="button-del">Delete</button>
+
+              <div className="description-delete">
+                <ToDoList />
               </div>
+            </div>
+
+            <div className="position-button-delete">
+              <button
+                className="button-cancel-delete"
+                onClick={closeDeleteModal}
+              >
+                Cancel
+              </button>
+              <button className="button-del-delete">Delete</button>
             </div>
           </div>
         </div>

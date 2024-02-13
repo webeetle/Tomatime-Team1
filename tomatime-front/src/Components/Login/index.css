@@ -32,7 +32,7 @@
   font-size: x-large;
 }
 
-::placeholder {
+.form::placeholder {
   color: black;
   font-size: xx-large;
 }

@@ -20,21 +20,22 @@ function WriteModal() {
       </span>
 
       {isWriteOpen && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <div className="modal-title">
-              <div class="image"></div>
-              <span class="title-text">Send message</span>
+        <div className="modal-overlay-write">
+          <div className="modal-write">
+            <div className="modal-title-write">
+              <div className="image-write"></div>
+              <span className="title-text-write">Send message</span>
             </div>
-            <textarea placeholder="Send a message to Tony:see you tomorrow?"></textarea>
-            <div className="position-button">
-              <div></div>
-              <div>
-                <button className="button-cancel" onClick={closeWriteModal}>
-                  <DeleteModal />
-                </button>
-                <button className="button-add">Add task</button>
-              </div>
+            <textarea
+              className="compile-text-write"
+              placeholder="Send a message to Tony:see you tomorrow?"
+            ></textarea>
+
+            <div className="button-container-write">
+              <button className="button-cancel-write" onClick={closeWriteModal}>
+                <DeleteModal />
+              </button>
+              <button className="button-add-write">Add task</button>
             </div>
           </div>
         </div>
