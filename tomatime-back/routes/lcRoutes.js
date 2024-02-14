@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const controller = require("../controllers/userControllers.js");
+const controller = require("../controllers/lcControllers.js");
 
+router.get('/', controller.getLC);
+router.get('/next/:id', controller.getNextStep);
 
-
-export default router;
+module.exports = router;
