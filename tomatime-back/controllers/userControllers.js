@@ -48,10 +48,10 @@ exports.login = async (req, res) => {
 
 exports.registration = async (req, res) => {
     try{
-        const {username, password} = req.body;
+        const {username, password, email} = req.body;
         if(username.length < 16 && password.length < 8){
             const [user] = await databasePool
-                .execute(`INSERT INTO User(username, password, date_of_registration) VALUES (?, ?, NOW())`, [username, password]);
+                .execute(`INSERT INTO User(username, email, password, date_of_registration) VALUES (?, ?, ?, NOW())`, [username, email, password]);
             return res.status(200).json({
                 msg: "Benvenuto"
             });
