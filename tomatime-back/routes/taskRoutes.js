@@ -7,6 +7,9 @@ router.get('/:id', controller.getTask);
 
 router.post('/', controller.addTask);
 
-router.put('/:id', controller.moveTask);
+router.put('/move/:id', controller.moveTask);
+router.put('/:id', controller.editTask);
+
+router.delete('/:id', controller.deleteTask);
 
 module.exports = router;
