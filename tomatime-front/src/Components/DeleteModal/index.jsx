@@ -15,7 +15,9 @@ function DeleteModal() {
 
   return (
     <>
-      <button onClick={openDeleteModal}>Cancella</button>
+      <button className="button-canc-delete" onClick={openDeleteModal}>
+        Cancella
+      </button>
       {isDeleteOpen && (
         <div className="modal-overlay-delete">
           <div className="modal-delete">
@@ -36,7 +38,7 @@ function DeleteModal() {
                 className="button-cancel-delete"
                 onClick={closeDeleteModal}
               >
-                Cancel
+                Return
               </button>
               <button className="button-del-delete">Delete</button>
             </div>

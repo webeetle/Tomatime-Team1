@@ -1,4 +1,4 @@
-.modal-overlay-delete {
+.modal-overlay-modify {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -12,7 +12,7 @@
   z-index: 90;
 }
 
-.modal-delete {
+.modal-modify {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -27,50 +27,40 @@
   height: 50%;
 }
 
-.container-title-delete {
+.container-title-modify {
   display: flex;
   flex-direction: column;
 }
 
-.title-text-delete {
+.title-text-modify {
   text-align: left;
   font-weight: 700;
   margin-bottom: 1rem;
 }
 
-.subtitle-text-delete {
+.subtitle-text-modify {
   padding-top: 2%;
   font-size: large;
   text-align: left;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
-.description-delete {
+.description-modify {
   border: 1px solid #f5f5f5;
   background: #f5f5f5;
   border-radius: 1rem;
 }
 
-.position-button-delete {
+.position-button-modify {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 50%;
   margin-left: auto;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
-button.button-canc-delete {
-  width: 47.5%;
-  height: 2rem;
-  border: 1px solid #d9391e;
-  border-radius: 8px;
-  background-color: #d9391e;
-  color: white;
-  font-size: large;
-}
-
-button.button-cancel-delete {
+button.button-cancel-modify {
   width: 47.5%;
   height: 2rem;
   border: 1px solid #d9391e;
@@ -79,7 +69,7 @@ button.button-cancel-delete {
   font-size: large;
 }
 
-button.button-del-delete {
+button.button-mod-modify {
   width: 47.5%;
   height: 2rem;
   border: 1px solid #d9391e;
@@ -87,4 +77,23 @@ button.button-del-delete {
   background-color: #d9391e;
   color: white;
   font-size: large;
+}
+
+textarea.compile-text-modify {
+  width: 100%;
+  height: 35%;
+  border: 1px solid grey;
+  border-radius: 1rem;
+  padding: 2%;
+  font-size: large;
+  resize: none;
+}
+
+input.title-text-modify {
+  border: 1px solid grey;
+  border-radius: 8px;
+  font-size: medium;
+  font-weight: 500;
+  width: 100%;
+  height: 7.5%;
 }

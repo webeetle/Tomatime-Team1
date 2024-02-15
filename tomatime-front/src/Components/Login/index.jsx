@@ -13,11 +13,12 @@ function Login({ changeStep }) {
           <input type="text" placeholder="Name" className="form" />
           <input type="password" placeholder="Password" className="form" />
         </div>
-        
-          <button className="login_btn">
-            <Link to ="/home" ><span className="text_btn">LOGIN</span></Link>
-          </button>
-        
+
+        <button className="login_btn">
+          <Link to="/home">
+            <span className="text_btn">LOGIN</span>
+          </Link>
+        </button>
 
         <div className="container-link">
           <span className="link">
