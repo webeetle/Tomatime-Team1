@@ -7,7 +7,7 @@ function AnotherList() {
   return (
     <>
       <div className="container-another-list">
-        <AddModal />
+        <AddModal userid={1}/>
 
         {/* <WriteModal /> */}
         <span className="msg-list">Add Task</span>

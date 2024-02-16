@@ -3,9 +3,9 @@ import "./index.css";
 import ModifyModal from "../ModifyModal";
 import DeleteModal from "../DeleteModal";
 
-function WriteModal() {
+function WriteModal(props) {
   const [isWriteOpen, setIsWriteOpen] = useState(false);
-
+  const {title, description} = props;
   const openWriteModal = () => {
     setIsWriteOpen(true);
   };
@@ -43,7 +43,7 @@ function WriteModal() {
                 placeholder="Insert Title"
                 className="title-text-write"
               >
-                Read emails
+                {title}
               </span>
               <button className="svg-icon-write" onClick={closeWriteModal}>
                 <svg
@@ -64,7 +64,7 @@ function WriteModal() {
             </div>
             <textarea
               className="compile-text-write"
-              placeholder="Send a message to Tony:see you tomorrow?"
+              placeholder={description}
             ></textarea>
 
             <div className="button-container-write">

@@ -9,6 +9,11 @@ async function withdraw(id){
   return task;
 }
 
+async function checkWorking(user_id){
+
+  const check = await databasePool.query("SELECT * FROM Task WHERE user_id=? AND state='WORKING'", [user_id]);
+  return check ? false : true;
+}
 
 exports.getTask = async (req, res) => {
   const id = req.params.id;
@@ -27,7 +32,7 @@ exports.getTask = async (req, res) => {
 }
 
 exports.getTasks = async (req, res) => {
-  const { id } = req.body;
+  const id = req.params.id
   if (id) {
     try {
       const [task] = await databasePool.query(
@@ -40,7 +45,6 @@ exports.getTasks = async (req, res) => {
       const done = [task.filter((element) => element.state == "DONE")];
 
       return res.status(200).json({
-        msg: "TASK: ",
         todo,
         inProgress,
         done,
@@ -53,12 +57,12 @@ exports.getTasks = async (req, res) => {
 };
 
 exports.addTask = async (req, res) => {
-  const { title, description, id } = req.body;
-  if (id && title) {
+  const { title, description, user_id } = req.body;
+  if (user_id && title) {
     try {
       const [task] = await databasePool.execute(
         "INSERT INTO Task(title , description, date_of_creation, state, user_id) VALUES (?, ?, NOW(), 'TODO', ?)",
-        [title, description, id]
+        [title, description, user_id]
       );
       return res.status(200).json({
         msg: "task creato con successo",
@@ -75,8 +79,7 @@ exports.addTask = async (req, res) => {
 
 exports.moveTask = async (req, res) => {
   const id = req.params.id
-  const { target } = req.body;
-
+  const { target, user_id} = req.body;
   if (id && target) {
     try {
       const task = await withdraw(id);
@@ -103,21 +106,25 @@ exports.moveTask = async (req, res) => {
           return res.status(200).json({ msg: "Task aggiornato" });
         } else return res.status(400).json({ msg: "Non concesso" });
       } 
-
-      const [move] = await databasePool.execute(`
+      if(checkWorking(user_id)&& target=="WORKING"){
+        const [move] = await databasePool.execute(`
             UPDATE Task
             SET state = ?
             WHERE id = ?
           `,[target, id]);
+        return res.status(200).json({ msg: "Task aggiornato" });
+      }
       
-      return res.status(200).json({ msg: "Task aggiornato" });
  
     } catch (err) {
       console.error(err);
       return res.sendStatus(500);
     }
   } return res.status(400).json({
-    msg: "Id non inserito"
+    msg: "info non inserite",
+    id,
+    target,
+    user_id
   })
 } 
 

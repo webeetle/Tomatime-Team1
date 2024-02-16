@@ -1,7 +1,8 @@
 import React from "react";
 import "./index.css";
 
-function DoneList() {
+function DoneList(props) {
+  const {title} = props;
   return (
     <>
       <div className="container-done-list">
@@ -19,7 +20,7 @@ function DoneList() {
             />
           </svg>
         </div>
-        <span className="msg-list">Read emails</span>
+        <span className="msg-list">{title}</span>
       </div>
     </>
   );

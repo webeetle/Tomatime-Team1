@@ -31,7 +31,7 @@ function Register({ changeStep }) {
           </div>
         </div>
         <button class="btn">
-          <span class="text_btn">SIGN IN</span>
+          <Link to="/login" class="text_btn">SIGN IN</Link>
         </button>
 
         <div class="container-link">
