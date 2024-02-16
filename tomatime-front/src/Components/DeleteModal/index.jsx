@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import "./index.css";
 import ToDoList from "../ToDoList";
+import axios from "axios";
 
-function DeleteModal() {
+async function deleteTask(id){
+  await axios.delete(`http://localhost:3000/task/${id}`)
+}
+
+function DeleteModal(props) {
+  const {id} = props;
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const openDeleteModal = () => {
@@ -40,7 +46,10 @@ function DeleteModal() {
               >
                 Return
               </button>
-              <button className="button-del-delete">Delete</button>
+              <button className="button-del-delete" onClick={async () => {
+                await deleteTask(id);
+                return window.location.reload();
+              }}>Delete</button>
             </div>
           </div>
         </div>

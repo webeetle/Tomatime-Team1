@@ -5,7 +5,7 @@ import DeleteModal from "../DeleteModal";
 
 function WriteModal(props) {
   const [isWriteOpen, setIsWriteOpen] = useState(false);
-  const {title, description} = props;
+  const {title, description, id} = props;
   const openWriteModal = () => {
     setIsWriteOpen(true);
   };
@@ -68,7 +68,7 @@ function WriteModal(props) {
             ></textarea>
 
             <div className="button-container-write">
-              <DeleteModal />
+              <DeleteModal id={id} />
 
               {/* <button className="button-add-write">Add task</button> */}
               <ModifyModal />

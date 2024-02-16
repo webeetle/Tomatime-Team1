@@ -4,7 +4,7 @@ import ToDoList from "../ToDoList";
 import axios from "axios";
 
 async function createTask(createTitle, createDescription, createUserId){
-  const response = await axios.post(`http://localhost/task/`, {createTitle, createDescription, createUserId});
+  const response = await axios.post(`http://localhost:3000/task/`, {title: createTitle, description: createDescription, user_id: createUserId});
 }
 
 function AddModal(props) {
@@ -41,7 +41,10 @@ function AddModal(props) {
 
       {isAddOpen && (
         <div className="modal-overlay-add">
-          <form action="">
+          <form action="" onSubmit={async (e) => {
+                    e.preventDefault();
+                    await createTask(title, description, userid);
+                   }}>
             <div className="modal-add">
               <div className="modal-title-add">
                 <div className="image-add"></div>
@@ -81,13 +84,7 @@ function AddModal(props) {
 
               <div className="position-button-add">
                 <div></div>
-                <button className="button-del-add" 
-                  onClick={ async () => { }}
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    await createTask(title, description, userid);
-                   }}
-                >Add task</button>
+                <button className="button-del-add" type="submit">Add task</button>
               </div>
             </div>
           </form>

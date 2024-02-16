@@ -135,8 +135,8 @@ exports.deleteTask = async ( req, res ) => {
           const task = await withdraw(id);
           const state = task[0].state;
           const isTODO = state == "TODO" ? true : false;
-
-          if (isTODO){
+          console.log("Prock");
+          if(isTODO){
 
               const[task]= await databasePool.execute(
                   "DELETE FROM Task WHERE id=?", [id]

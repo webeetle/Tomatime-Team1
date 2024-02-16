@@ -19,7 +19,7 @@ function ToDoList(props) {
     <>
       <div className="container-list">
         <div className="check-list">
-          <WriteModal title={title} description={description}/>
+          <WriteModal title={title} description={description} id={taskid} />
         </div>
         <span className="msg-list">{title}</span>
         <div className="arrow-list" onClick={ async () => {
