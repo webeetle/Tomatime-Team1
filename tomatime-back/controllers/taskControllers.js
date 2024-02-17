@@ -41,7 +41,7 @@ exports.getTasks = async (req, res) => {
       );
 
       const todo = [task.filter((element) => element.state == "TODO")];
-      const inProgress = [task.filter((element) => element.state == "DOING")];
+      const inProgress = [task.filter((element) => element.state == "WORKING")];
       const done = [task.filter((element) => element.state == "DONE")];
 
       return res.status(200).json({

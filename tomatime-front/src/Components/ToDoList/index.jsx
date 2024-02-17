@@ -13,13 +13,13 @@ async function moveTask(id, userid){
 
 
 function ToDoList(props) {
-  const { list, title, description, taskid, userid } = props;
+  const { title, description, taskid, userid } = props;
 
   return (
     <>
       <div className="container-list">
         <div className="check-list">
-          <WriteModal title={title} description={description} id={taskid} />
+          <WriteModal title={title} description={description} id={taskid}/>
         </div>
         <span className="msg-list">{title}</span>
         <div className="arrow-list" onClick={ async () => {

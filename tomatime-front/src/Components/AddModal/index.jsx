@@ -12,6 +12,9 @@ function AddModal(props) {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  const {rerender} = props;
+
   const openAddModal = () => {
     setIsAddOpen(true);
   };
@@ -44,6 +47,8 @@ function AddModal(props) {
           <form action="" onSubmit={async (e) => {
                     e.preventDefault();
                     await createTask(title, description, userid);
+                    closeAddModal();
+                    rerender();
                    }}>
             <div className="modal-add">
               <div className="modal-title-add">
