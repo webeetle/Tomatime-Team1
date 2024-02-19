@@ -8,16 +8,21 @@ async function lcSteps(){
 }
 
 exports.getLC = async (req, res) => {
+    const id = +req.body.params;
+    if(id){
+        try{
 
-    try{
-
-        const [LC] = await databasePool.query("SELECT * FROM LC");
-        return res.status(200).json(LC)
-
-    }catch(err){
-        console.error(err);
-        return res.sendStatus(500);
-    }
+            const [LC] = await databasePool.query("SELECT * FROM LC WHERE id = ?", [id]);
+            return res.status(200).json(LC)
+    
+        }catch(err){
+            console.error(err);
+            return res.sendStatus(500);
+        }
+    }else return res.status(400).json({
+        msg: "ID NON TROVATO"
+    })
+    
 
 }
 

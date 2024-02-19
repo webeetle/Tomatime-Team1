@@ -9,10 +9,10 @@ async function withdraw(id){
   return task;
 }
 
-async function checkWorking(user_id){
+async function isWorkingFree(user_id){
 
-  const check = await databasePool.query("SELECT * FROM Task WHERE user_id=? AND state='WORKING'", [user_id]);
-  return check ? false : true;
+  const [check] = await databasePool.query(`SELECT * FROM Task WHERE state="WORKING" AND user_id=1`, [user_id]);
+  return check.length > 0 ? false : true;
 }
 
 exports.getTask = async (req, res) => {
@@ -87,16 +87,18 @@ exports.moveTask = async (req, res) => {
       //const canMoveWorking = (state == "TODO" || state == "DONE") ? true : false;
       const canMoveFromWorking = state == "WORKING" ? true : false;
       
-      if(canMoveFromWorking && target == "DONE"){
-        const [move] = await databasePool.execute(`
-            UPDATE Task
-            SET state = ?, date_of_completition = NOW()
-            WHERE id = ?
-          `,[target, id]);
+      if(target == "DONE"){
+        if(canMoveFromWorking){
+          const [move] = await databasePool.execute(`
+              UPDATE Task
+              SET state = ?, date_of_completition = NOW()
+              WHERE id = ?
+            `,[target, id]);
           return res.status(200).json({ msg: "Task aggiornato" });
+        }
       }
 
-      if(target != "WORKING" ){
+      if(target == "TODO" ){
         if(canMoveFromWorking){
           const [move] = await databasePool.execute(`
             UPDATE Task
@@ -106,13 +108,17 @@ exports.moveTask = async (req, res) => {
           return res.status(200).json({ msg: "Task aggiornato" });
         } else return res.status(400).json({ msg: "Non concesso" });
       } 
-      if(checkWorking(user_id)&& target=="WORKING"){
-        const [move] = await databasePool.execute(`
+
+      if(target=="WORKING"){
+        console.log(isWorkingFree(user_id))
+        if(await isWorkingFree(user_id)){
+          const [move] = await databasePool.execute(`
             UPDATE Task
             SET state = ?
             WHERE id = ?
           `,[target, id]);
-        return res.status(200).json({ msg: "Task aggiornato" });
+          return res.status(200).json({ msg: "Task aggiornato" });
+        }
       }
       
  

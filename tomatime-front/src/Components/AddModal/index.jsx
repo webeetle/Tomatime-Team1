@@ -4,7 +4,8 @@ import ToDoList from "../ToDoList";
 import axios from "axios";
 
 async function createTask(createTitle, createDescription, createUserId){
-  const response = await axios.post(`http://localhost:3000/task/`, {title: createTitle, description: createDescription, user_id: createUserId});
+  const create = await axios.post(`http://localhost:3000/task/`, {title: createTitle, description: createDescription, user_id: createUserId});
+  return window.location.reload();
 }
 
 function AddModal(props) {
@@ -48,7 +49,7 @@ function AddModal(props) {
                     e.preventDefault();
                     await createTask(title, description, userid);
                     closeAddModal();
-                    rerender();
+                    rerender(3);
                    }}>
             <div className="modal-add">
               <div className="modal-title-add">

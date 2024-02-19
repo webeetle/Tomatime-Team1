@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import "./index.css";
-import ToDoList from "../ToDoList";
+import axios from "axios";
 
-function ModifyModal() {
+
+async function editTask(editID,editTitle, editDescription){
+  const create = await axios.put(`http://localhost:3000/task/${editID}`, {title: editTitle, description: editDescription});
+  return window.location.reload();
+}
+
+function ModifyModal(props) {
+  const {id} = props;
   const [isModifyOpen, setIsModifyOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
 
   const openModifyModal = () => {
     setIsModifyOpen(true);
@@ -27,17 +37,29 @@ function ModifyModal() {
                 Are you sure you want to modify this task?
               </span>
             </div>
-            <form action="">
+            <form action="" on onSubmit={(e) => {
+              e.preventDefault();
+              editTask(id, title, description)
+
+            }}>
               <input
                 type="text"
                 placeholder="Insert Title"
+                value = {title}
                 className="title-text-modify"
+                onChange={(e) => {
+                  setTitle(e.target.value)
+                }}
                 required
               />
 
               <textarea
                 className="compile-text-modify"
                 placeholder="Modify information to the task"
+                value = {description}
+                onChange={(e) => {
+                  setDescription(e.target.value)
+                }}
                 required
               ></textarea>
               <div className="position-button-modify">

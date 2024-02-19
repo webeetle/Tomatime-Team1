@@ -71,7 +71,7 @@ function WriteModal(props) {
               <DeleteModal id={id} />
 
               {/* <button className="button-add-write">Add task</button> */}
-              <ModifyModal />
+              <ModifyModal id={id} />
             </div>
           </div>
         </div>
