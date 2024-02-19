@@ -2,10 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./index.css"
 import axios from "axios";
 
-const startSeconds = 60;
-const startMinutes = 25;
-const startTimer = startMinutes * startSeconds * 1000;
-
 async function moveTask(id, userid, target){
     const response = await axios.put(`http://localhost:3000/task/move/${id}`, {
         target,
@@ -14,9 +10,21 @@ async function moveTask(id, userid, target){
     return
 }
 
+async function getTime(id){
+    const response = await axios.get(`http://localhost:3000/lc/${id}`);
+    const results = response.data;
+    console.log(results)
+    return results[0].duration;
+}
+
+const startSeconds = 60;
+const startMinutes = await getTime(1);
+const startTimer = startMinutes * startSeconds * 1000;
+const nextInLineMinutes = await getTime(2)
 
 function CentralContainer(props){
     const {taskInProgress} = props;
+    const [step, setStep] = useState(1);
 
     const minutesToDisplay = startTimer / 1000 / startSeconds;
     let secondsToDisplay = (startTimer / 1000 / startMinutes) % 60;
@@ -29,7 +37,7 @@ function CentralContainer(props){
             <span className="timer">
               {minutesToDisplay}:{secondsToDisplay}
             </span>
-            <span className="subtitle-center">NEXT: SHORT BREAK(+5MIN)</span>
+            <span className="subtitle-center">NEXT: SHORT BREAK {nextInLineMinutes}min </span>
             <div className="play">
                 <div className="circle">
                     <div className="arrow"></div>
