@@ -60,7 +60,6 @@ function ModifyModal(props) {
                 onChange={(e) => {
                   setDescription(e.target.value)
                 }}
-                required
               ></textarea>
               <div className="position-button-modify">
                 <button

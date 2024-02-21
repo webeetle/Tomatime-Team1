@@ -85,7 +85,6 @@ function AddModal(props) {
                 placeholder="Add information to the task"
                 value={description}
                 onChange={(e) => { setDescription(e.target.value)}}
-                required
               ></textarea>
 
               <div className="position-button-add">

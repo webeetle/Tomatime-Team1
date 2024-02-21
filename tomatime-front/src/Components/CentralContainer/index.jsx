@@ -17,14 +17,27 @@ async function getTime(id){
     return results[0].duration;
 }
 
-const startSeconds = 60;
-const startMinutes = await getTime(1);
-const startTimer = startMinutes * startSeconds * 1000;
-const nextInLineMinutes = await getTime(2)
 
 function CentralContainer(props){
     const {taskInProgress} = props;
+
     const [step, setStep] = useState(1);
+    const [startMinutes, setstartMinutes] = useState(0);
+    const [nextInLineMinutes, setnextInLineMinutes] = useState(0);
+
+    useEffect( async () => {
+        setstartMinutes(await getTime(step));
+        setnextInLineMinutes(await getTime(step + 1));
+    }, [step])
+
+    const startSeconds = 60;
+    /* const startMinutes = async () => {
+        return await getTime(step);
+    } */
+    const startTimer = startMinutes * startSeconds * 1000;
+    /* const nextInLineMinutes = async () => {
+        return await getTime(step + 1);
+    } */
 
     const minutesToDisplay = startTimer / 1000 / startSeconds;
     let secondsToDisplay = (startTimer / 1000 / startMinutes) % 60;
