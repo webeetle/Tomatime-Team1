@@ -8,6 +8,10 @@
   border-radius: 8px;
 }
 
+.container-another-list:hover {
+  background-color: #eeeeee;
+}
+
 .plus-list {
   width: 27px;
   color: #d9391e;

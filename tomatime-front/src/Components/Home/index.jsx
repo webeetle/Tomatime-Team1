@@ -6,22 +6,20 @@ import LeftContainer from "../LeftContainer";
 import CentralContainer from "../CentralContainer";
 import RightContainer from "../RightContainer";
 
-
 function Home(props) {
-
   const [task, setTask] = useState({});
-  useEffect( () => {
-    fetchTask()
-  },  []);
+  useEffect(() => {
+    fetchTask();
+  }, []);
 
   const fetchTask = async () => {
     const response = await axios.get("http://localhost:3000/task/1");
     const results = response.data;
     setTask(results);
     console.log(results);
-  }
+  };
 
-if(task.todo){
+  if (task.todo) {
     return (
       <>
         <div className="home-container">
@@ -49,7 +47,7 @@ if(task.todo){
           <div className="main-container">
             <div className="container-div">
               <LeftContainer taskList={task.todo[0]} />
-              <CentralContainer taskInProgress={task.inProgress[0]}/>
+              <CentralContainer taskInProgress={task.inProgress[0]} />
               <RightContainer taskList={task.done[0]} />
             </div>
           </div>

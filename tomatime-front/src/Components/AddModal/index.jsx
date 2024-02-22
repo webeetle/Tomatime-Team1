@@ -3,18 +3,22 @@ import "./index.css";
 import ToDoList from "../ToDoList";
 import axios from "axios";
 
-async function createTask(createTitle, createDescription, createUserId){
-  const create = await axios.post(`http://localhost:3000/task/`, {title: createTitle, description: createDescription, user_id: createUserId});
+async function createTask(createTitle, createDescription, createUserId) {
+  const create = await axios.post(`http://localhost:3000/task/`, {
+    title: createTitle,
+    description: createDescription,
+    user_id: createUserId,
+  });
   return window.location.reload();
 }
 
 function AddModal(props) {
-  const {userid} = props;
+  const { userid } = props;
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const {rerender} = props;
+  const { rerender } = props;
 
   const openAddModal = () => {
     setIsAddOpen(true);
@@ -45,12 +49,15 @@ function AddModal(props) {
 
       {isAddOpen && (
         <div className="modal-overlay-add">
-          <form action="" onSubmit={async (e) => {
-                    e.preventDefault();
-                    await createTask(title, description, userid);
-                    closeAddModal();
-                    rerender(3);
-                   }}>
+          <form
+            action=""
+            onSubmit={async (e) => {
+              e.preventDefault();
+              await createTask(title, description, userid);
+              closeAddModal();
+              rerender(3);
+            }}
+          >
             <div className="modal-add">
               <div className="modal-title-add">
                 <div className="image-add"></div>
@@ -60,7 +67,9 @@ function AddModal(props) {
                   placeholder="Insert Title"
                   className="title-text-add"
                   value={title}
-                  onChange={(e) => { setTitle(e.target.value)}}
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
                   required
                 />
                 <button className="icon-add" onClick={closeAddModal}>
@@ -84,13 +93,17 @@ function AddModal(props) {
                 className="compile-text-add"
                 placeholder="Add information to the task"
                 value={description}
-                onChange={(e) => { setDescription(e.target.value)}}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
                 required
               ></textarea>
 
               <div className="position-button-add">
                 <div></div>
-                <button className="button-del-add" type="submit">Add task</button>
+                <button className="button-del-add" type="submit">
+                  Add task
+                </button>
               </div>
             </div>
           </form>

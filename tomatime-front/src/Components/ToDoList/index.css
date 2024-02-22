@@ -4,6 +4,12 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-left: 4%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.container-list:hover {
+  background-color: #eeeeee;
 }
 
 .check-list {
