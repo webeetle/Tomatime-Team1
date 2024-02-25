@@ -10,8 +10,12 @@ function Login({ changeStep }) {
         <span className="login">LOGIN</span>
 
         <div>
-          <input type="text" placeholder="Name" className="form" />
-          <input type="password" placeholder="Password" className="form" />
+          <input type="text" placeholder="Name" className="form-name-login" />
+          <input
+            type="password"
+            placeholder="Password"
+            className="form-email-register"
+          />
         </div>
 
         <button className="login_btn">

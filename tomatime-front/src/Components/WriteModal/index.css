@@ -1,3 +1,22 @@
+.container-two-elements-write {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 4%;
+  border-radius: 8px;
+  width: 15rem;
+}
+
+.msg-list {
+  display: flex;
+  color: #d9391e;
+  font-size: small;
+  margin-right: auto;
+  margin-left: 2.5%;
+}
+
 .modal-overlay-write {
   position: absolute;
   top: 50%;

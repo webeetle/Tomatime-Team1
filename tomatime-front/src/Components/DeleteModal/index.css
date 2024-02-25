@@ -1,3 +1,16 @@
+.container-two-elements-delete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 4%;
+  border-radius: 8px;
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: #eeeeee;
+}
+
 .modal-overlay-delete {
   position: absolute;
   top: 50%;
@@ -43,12 +56,6 @@
   font-size: large;
   text-align: left;
   margin-bottom: 3rem;
-}
-
-.description-delete {
-  border: 1px solid #f5f5f5;
-  background: #f5f5f5;
-  border-radius: 1rem;
 }
 
 .position-button-delete {
