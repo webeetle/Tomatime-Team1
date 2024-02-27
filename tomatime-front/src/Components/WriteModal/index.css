@@ -19,11 +19,11 @@
 
 .modal-overlay-write {
   position: absolute;
-  top: 50%;
+  top: 46%;
   left: 62.5%;
   transform: translate(-60%, -55%);
   width: 125%;
-  height: 111%;
+  height: 120%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 90;
 }

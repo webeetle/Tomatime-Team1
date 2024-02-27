@@ -82,7 +82,7 @@ function CentralContainer(props) {
         {minutesToDisplay}:{secondsToDisplay}
       </span>
       <span className="subtitle-center">
-        NEXT: SHORT BREAK {nextInLineMinutes}min{" "}
+        NEXT: SHORT BREAK (+{nextInLineMinutes} MIN)
       </span>
 
       {/* Start button */}
@@ -138,7 +138,27 @@ function CentralContainer(props) {
             return window.location.reload();
           }}
         >
-          <span>←To do</span>
+          <span>
+            <div className="left-central-container">
+              <div className="arrow-left-central">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
+                </svg>
+              </div>
+              <div className="arrow-left-text-central">To do</div>
+            </div>
+          </span>
         </button>
 
         <button
@@ -152,7 +172,27 @@ function CentralContainer(props) {
             return window.location.reload();
           }}
         >
-          <span>Done→</span>
+          <span>
+            <div className="right-central-container">
+              <div className="arrow-right-text-central">Done</div>
+              <div className="arrow-right-central">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
         </button>
       </div>
     </div>

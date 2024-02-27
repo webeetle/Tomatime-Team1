@@ -23,23 +23,23 @@ function Register({ changeStep }) {
             placeholder="Confirm Password"
             className="form"
           ></input>
-          <div class="check-container">
-            <input class="checkmark" type="checkbox" />
-            <span class="text-check">
+          <div className="check-container">
+            <input className="checkmark" type="checkbox" />
+            <span className="text-check">
               Send me newsletters,tricks and updates.
             </span>
           </div>
         </div>
-        <button class="btn">
-          <Link to="/login" class="text_btn">SIGN IN</Link>
+        <button className="btn">
+          <Link to="/login" className="text_btn">
+            SIGN IN
+          </Link>
         </button>
 
-        <div class="container-link">
+        <div className="container-link">
           <span className="link">
             Already have an account?&nbsp;
-            <Link to="/login" className="switch-link">
-              Login now
-            </Link>
+            <Link to="/login">Login now</Link>
           </span>
         </div>
       </div>

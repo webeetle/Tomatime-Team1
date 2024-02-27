@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.css";
 import { Link } from "react-router-dom";
 import BackGround from "../BackGround";
 function Login({ changeStep }) {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+
+  const message = () => {
+    alert("Non tutti i campi sono stati compilati");
+  };
+
+  const handleNameChange = (e) => {
+    console.log(e.target.value);
+    setName(e.target.value);
+    checkButtonStatus(e.target.value, password);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    checkButtonStatus(name, e.target.value);
+  };
+
+  const checkButtonStatus = (name, password) => {
+    if (name.length > 0 && password.length > 0) {
+      setIsButtonEnabled(true);
+    } else {
+      setIsButtonEnabled(false);
+    }
+  };
+
   return (
     <>
       <BackGround />
@@ -10,24 +37,37 @@ function Login({ changeStep }) {
         <span className="login">LOGIN</span>
 
         <div>
-          <input type="text" placeholder="Name" className="form-name-login" />
+          <input
+            type="text"
+            placeholder="Name"
+            onChange={(e) => handleNameChange(e)}
+            className="form-name-login"
+          />
+
           <input
             type="password"
             placeholder="Password"
+            onChange={(e) => handlePasswordChange(e)}
             className="form-email-register"
           />
         </div>
 
-        <button className="login_btn">
-          <Link to="/home">
+        {isButtonEnabled ? (
+          <button className="login_btn enabled">
+            <Link to="/home">
+              <span className="text_btn">LOGIN</span>
+            </Link>
+          </button>
+        ) : (
+          <button className="fake_btn" onClick={message}>
             <span className="text_btn">LOGIN</span>
-          </Link>
-        </button>
+          </button>
+        )}
 
         <div className="container-link">
           <span className="link">
             Not registed yet?&nbsp;
-            <Link to="/register" className="switch-link">
+            <Link to="/register" className="register-link">
               Register now
             </Link>
           </span>
