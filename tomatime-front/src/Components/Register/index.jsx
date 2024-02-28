@@ -1,9 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.css";
 import { Link } from "react-router-dom";
 import BackGround from "../BackGround";
 
-function Register({ changeStep }) {
+const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+
+  const messageRegister = () => {
+    alert("Non tutti i campi sono stati compilati");
+  };
+
+  const handleNameChangeRegister = (e) => {
+    setName(e.target.value);
+    checkButtonStatusRegister(e.target.value, email, password, passwordConfirm);
+  };
+
+  const handleEmailChangeRegister = (e) => {
+    setEmail(e.target.value);
+    checkButtonStatusRegister(name, e.target.value, password, passwordConfirm);
+  };
+
+  const handlePasswordChangeRegister = (e) => {
+    setPassword(e.target.value);
+    checkButtonStatusRegister(name, email, e.target.value, passwordConfirm);
+  };
+
+  const handlePasswordConfirmChangeRegister = (e) => {
+    setPasswordConfirm(e.target.value);
+    checkButtonStatusRegister(name, email, password, e.target.value);
+  };
+
+  const checkButtonStatusRegister = (
+    name,
+    email,
+    password,
+    passwordConfirm
+  ) => {
+    if (
+      name.length > 0 &&
+      email.length > 0 &&
+      password.length > 0 &&
+      passwordConfirm.length > 0
+    ) {
+      setIsButtonEnabled(true);
+    } else {
+      setIsButtonEnabled(false);
+    }
+  };
+
   return (
     <>
       <BackGround />
@@ -11,40 +59,65 @@ function Register({ changeStep }) {
         <span className="register">SIGN IN</span>
 
         <div>
-          <input type="text" placeholder="Name" className="form"></input>
-          <input type="text" placeholder="Email" className="form"></input>
+          <input
+            type="text"
+            placeholder="Name"
+            onChange={(e) => handleNameChangeRegister(e)}
+            autoComplete="off"
+            className="form-name-register"
+          ></input>
+          <input
+            type="text"
+            placeholder="Email"
+            onChange={(e) => handleEmailChangeRegister(e)}
+            ù
+            autoComplete="off"
+            className="form-email-register"
+          ></input>
           <input
             type="password"
             placeholder="Password"
-            className="form"
+            onChange={(e) => handlePasswordChangeRegister(e)}
+            autoComplete="off"
+            className="form-password-register"
           ></input>
           <input
             type="password"
             placeholder="Confirm Password"
-            className="form"
+            onChange={(e) => handlePasswordConfirmChangeRegister(e)}
+            autoComplete="off"
+            className="form-passwordConfirm-register"
           ></input>
-          <div className="check-container">
+          {/* <div className="check-container">
             <input className="checkmark" type="checkbox" />
             <span className="text-check">
               Send me newsletters,tricks and updates.
             </span>
-          </div>
+          </div> */}
         </div>
-        <button className="btn">
-          <Link to="/login" className="text_btn">
-            SIGN IN
-          </Link>
-        </button>
+
+        {isButtonEnabled ? (
+          <button className="register_btn enabled">
+            <Link to="/login">
+              <span className="text_btn_register">SIGN IN</span>
+            </Link>
+          </button>
+        ) : (
+          <button className="fake_btn_register" onClick={messageRegister}>
+            <span className="text_btn_register">SIGN IN</span>
+          </button>
+        )}
 
         <div className="container-link">
           <span className="link">
             Already have an account?&nbsp;
-            <Link to="/login">Login now</Link>
+            <Link to="/login" className="login-link">
+              Login now
+            </Link>
           </span>
         </div>
       </div>
     </>
   );
-}
-
+};
 export default Register;

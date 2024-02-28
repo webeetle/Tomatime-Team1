@@ -12,7 +12,6 @@ function Login({ changeStep }) {
   };
 
   const handleNameChange = (e) => {
-    console.log(e.target.value);
     setName(e.target.value);
     checkButtonStatus(e.target.value, password);
   };
@@ -41,6 +40,7 @@ function Login({ changeStep }) {
             type="text"
             placeholder="Name"
             onChange={(e) => handleNameChange(e)}
+            autoComplete="off"
             className="form-name-login"
           />
 
@@ -48,6 +48,7 @@ function Login({ changeStep }) {
             type="password"
             placeholder="Password"
             onChange={(e) => handlePasswordChange(e)}
+            autoComplete="off"
             className="form-email-register"
           />
         </div>
@@ -55,12 +56,12 @@ function Login({ changeStep }) {
         {isButtonEnabled ? (
           <button className="login_btn enabled">
             <Link to="/home">
-              <span className="text_btn">LOGIN</span>
+              <span className="text_btn_login">LOGIN</span>
             </Link>
           </button>
         ) : (
-          <button className="fake_btn" onClick={message}>
-            <span className="text_btn">LOGIN</span>
+          <button className="fake_btn_login" onClick={message}>
+            <span className="text_btn_login">LOGIN</span>
           </button>
         )}
 
