@@ -2,47 +2,128 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 import axios from "axios";
 
-async function moveTask(id, userid, target) {
-  const response = await axios.put(`http://localhost:3000/task/move/${id}`, {
-    target,
-    userid,
-  });
-  return;
-}
 
-async function getTime(id) {
-  const response = await axios.get(`http://localhost:3000/lc/${id}`);
-  const results = response.data;
-  console.log(results);
-  return results[0].duration;
-}
 
 function CentralContainer(props) {
   const { taskInProgress } = props;
+  const {clock, toggleClock} = props;
 
   const [step, setStep] = useState(1);
-  const [startMinutes, setstartMinutes] = useState(0);
+  const [startMinutes, setStartMinutes] = useState(0);
+  const [startSeconds, setStartSeconds] = useState(0);
   const [nextInLineMinutes, setnextInLineMinutes] = useState(0);
+  const [timer, setTimer] = useState({});
+   
+  const createTimer = async (user_id) =>{
+    const response = await axios.get(`http://localhost:3000/lc/${step}`);
+    const lifecycle = response.data[0];
+    const {duration, description} = lifecycle;
+    await axios.post(`http://localhost:3000/timer/${user_id}`, {step, duration, description});
+  }
 
-  useEffect(async () => {
-    setstartMinutes(await getTime(step));
-    setnextInLineMinutes(await getTime(step + 1));
-  }, [step]);
+  async function moveTask(id, userid, target) {
+    const response = await axios.put(`http://localhost:3000/task/move/${id}`, {
+      target,
+      userid,
+    });
+    return;
+  }
+  
+  async function getTime(id) {
+    const response = await axios.get(`http://localhost:3000/lc/${id}`);
+    const results = response.data;
+    return results[0].duration;
+  }
 
-  const startSeconds = 60;
-  /* const startMinutes = async () => {
+  async function getTimerTime(user_id){
+    try{
+      const response = await axios.get(`http://localhost:3000/timer/time/${user_id}`);
+      setStartMinutes(response.data.minutes);
+      setStartSeconds(response.data.seconds);
+      return
+    }catch(err){
+      console.error(err.response.data.msg);
+      if(err.response.data.msg == "Il pomodoro è completato") return setStep(step+1);
+      return setStep(1);
+    }
+  }
+
+  async function getTimer(user_id){
+    const response = await axios.get(`http://localhost:3000/timer/${user_id}`);
+    const results = response.data;
+    setTimer(results[0]);
+  }
+
+  const onMountDo = async () => {
+    if(timer == undefined) await getTimer(taskInProgress[0].user_id);
+    if(timer.state == "RUNNING") {
+      await getTimerTime(1);
+      setnextInLineMinutes(await getTime(step + 1));
+    }
+    else {
+      setStartMinutes(await getTime(step));
+      setStartSeconds(0);
+      setnextInLineMinutes(await getTime(step+1));
+    }
+    return
+  }
+
+  const stopTimer = async () => {
+    await axios.put(`http://localhost:3000/timer/${timer.id}`);
+    if (step != 1) setStep(1);
+  }
+
+  const completeTomato = async () => {
+    await axios.put(`http://localhost:3000/timer/complete/${taskInProgress[0].user_id}`);
+    if(step == 6) setStep(1);
+    else setStep(step + 1);
+  }
+
+  useEffect(() => {
+    let interval = null;
+
+    if(clock && (startSeconds || startMinutes) ) { 
+      interval = setInterval(() => {
+        if(startSeconds != 0) setStartSeconds(startSeconds - 1);
+        else{
+          setStartMinutes(startMinutes - 1);
+          setStartSeconds(59);
+      }
+    }, 1000)
+    } 
+    else {
+      clearInterval(interval);
+      completeTomato();
+    }
+    
+    return () => {
+      console.log("Prova");
+      clearInterval(interval);
+    }
+  }, [clock, startSeconds, startMinutes])
+  
+
+  useEffect(() => {
+    if(step == 7) setStep(1);
+    onMountDo();
+  }, [step, timer]);
+
+  /* const startSeconds = 60;
+   const startMinutes = async () => {
         return await getTime(step);
     } */
-  const startTimer = startMinutes * startSeconds * 1000;
+  // const startTimer = startMinutes * startSeconds * 1000;
   /* const nextInLineMinutes = async () => {
         return await getTime(step + 1);
     } */
 
-  const minutesToDisplay = startTimer / 1000 / startSeconds;
-  let secondsToDisplay = (startTimer / 1000 / startMinutes) % 60;
+  let minutesToDisplay = startMinutes //startTimer / 1000 / startSeconds;
+  let secondsToDisplay =  startSeconds //(startTimer / 1000 / startMinutes) % 60;
   if (secondsToDisplay < 10) secondsToDisplay = "0" + secondsToDisplay;
 
+  
   function changePlay() {
+    
     const arrow = document.querySelector("#clickPlay");
     const broke = document.querySelector("#clickBroken");
     const tomato = document.querySelector("#tomato");
@@ -76,24 +157,37 @@ function CentralContainer(props) {
   }
 
   return (
+
     <div className="central-container">
       <span className="title-center">TIME TO FOCUS</span>
       <span className="timer">
-        {minutesToDisplay}:{secondsToDisplay}
+        {startMinutes}:{startSeconds < 10 ? (`0${startSeconds}`) : startSeconds }
       </span>
       <span className="subtitle-center">
         NEXT: SHORT BREAK {nextInLineMinutes}min{" "}
       </span>
 
       {/* Start button */}
-      <button className="play" id="clickPlay" onClick={changePlay}>
+      <button className="play" id="clickPlay" onClick={async () => {
+        changePlay();
+        if(timer == undefined) {
+          await createTimer(taskInProgress[0].user_id);
+          await getTimer(taskInProgress[0].user_id);
+        }
+        if(timer.state != undefined || timer.state != 'RUNNING' ) await createTimer(taskInProgress[0].user_id); 
+        toggleClock(true);
+      }}>
         <div className="circle">
           <div className="variable_arrow"></div>
         </div>
       </button>
 
       {/* Broke button */}
-      <button className="broke" id="clickBroken" onClick={changeBroken}>
+      <button className="broke" id="clickBroken" onClick={async () => {
+        changeBroken();
+        toggleClock(false);
+        await stopTimer();
+      }}>
         <div className="circle">
           <div className="variable_broke"></div>
         </div>

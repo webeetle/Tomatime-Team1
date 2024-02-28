@@ -8,12 +8,18 @@ import RightContainer from "../RightContainer";
 
 function Home(props) {
   const [task, setTask] = useState({});
+  const [clock, setClock] = useState(false);
+
+  const toggleClock = () => {
+    setClock(!clock);
+  }
+
   useEffect(() => {
     fetchTask();
   }, []);
 
   const fetchTask = async () => {
-    const response = await axios.get("http://localhost:3000/task/1");
+    const response = await axios.get("http://localhost:3000/task/1"); //next
     const results = response.data;
     setTask(results);
     console.log(results);
@@ -47,7 +53,7 @@ function Home(props) {
           <div className="main-container">
             <div className="container-div">
               <LeftContainer taskList={task.todo[0]} />
-              <CentralContainer taskInProgress={task.inProgress[0]} />
+              <CentralContainer taskInProgress={task.inProgress[0]} toggleClock={toggleClock} clock={clock} />
               <RightContainer taskList={task.done[0]} />
             </div>
           </div>

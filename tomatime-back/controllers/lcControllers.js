@@ -9,7 +9,6 @@ async function lcSteps(){
 
 exports.getLC = async (req, res) => {
     const id = req.params.id
-    console.log(id)
     if(id){
         try{
 
