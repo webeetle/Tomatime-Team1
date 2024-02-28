@@ -9,10 +9,28 @@
 }
 
 .counter-icon {
+  position: relative;
   width: 20px;
   height: 20px;
   background-size: 100%;
   background-repeat: no-repeat;
+}
+
+.counter-icon-information {
+  display: none;
+  position: absolute;
+  bottom: 23px;
+  transform: translateX(-25%);
+  white-space: nowrap;
+  background-color: #e0dfdf;
+  border-radius: 4px;
+  padding: 1px;
+  font-size: x-small;
+  color: rgb(190, 26, 26);
+}
+
+.counter-icon:hover > .counter-icon-information {
+  display: block;
 }
 
 .brokenTask .counter-icon {

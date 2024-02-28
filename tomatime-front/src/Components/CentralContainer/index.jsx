@@ -56,11 +56,17 @@ function CentralContainer(props) {
   function changeBroken() {
     const modal = document.querySelector("#clickModal");
     modal.style.display = "block";
+
+    const navbar = document.querySelector(".navbar");
+    navbar.style.zIndex = 0;
   }
 
   function returnTomato() {
     const modal = document.querySelector("#clickModal");
     modal.style.display = "none";
+
+    const navbar = document.querySelector(".navbar");
+    navbar.style.zIndex = 2;
   }
 
   function brokeTomato() {
@@ -73,6 +79,8 @@ function CentralContainer(props) {
     arrow.style.display = "block";
     tomato.classList.remove("tomatoAppear");
     tomato.classList.add("tomatoDisappear");
+    const navbar = document.querySelector(".navbar");
+    navbar.style.zIndex = 2;
   }
 
   return (
