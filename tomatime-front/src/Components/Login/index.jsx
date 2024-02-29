@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import "./index.css";
 import { Link } from "react-router-dom";
 import BackGround from "../BackGround";
-function Login({ changeStep }) {
+import axios from "axios";
+
+
+function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
@@ -29,6 +32,13 @@ function Login({ changeStep }) {
     }
   };
 
+  /* const login = async (username, password) => {
+    const response = await axios.post("http://localhost:3000/user/login", {username, password});
+    const results = response.data
+    return results.canLogin;
+  } */
+
+
   return (
     <>
       <BackGround />
@@ -54,11 +64,12 @@ function Login({ changeStep }) {
         </div>
 
         {isButtonEnabled ? (
-          <button className="login_btn enabled">
-            <Link to="/home">
-              <span className="text_btn_login">LOGIN</span>
-            </Link>
-          </button>
+          
+            <button className="login_btn enabled">
+              <Link to={ "/home"/* login() ? "/home" : "" */}>
+                <span className="text_btn_login">LOGIN</span>
+              </Link>
+            </button>
         ) : (
           <button className="fake_btn_login" onClick={message}>
             <span className="text_btn_login">LOGIN</span>
@@ -68,7 +79,7 @@ function Login({ changeStep }) {
         <div className="container-link">
           <span className="link">
             Not registed yet?&nbsp;
-            <Link to="/register" className="register-link">
+            <Link to={"/register"} className="register-link">
               Register now
             </Link>
           </span>

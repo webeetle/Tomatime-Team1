@@ -73,7 +73,6 @@ exports.startTimer = async (req, res) => {
     if(user_id && duration && step && description){
         try{
             const [lastTimer] = await databasePool.query("SELECT * FROM Timer WHERE id=(SELECT MAX(id) FROM Timer WHERE user_id = ?)", [user_id]);
-            console.log(lastTimer);
             if(lastTimer.length > 0) if (lastTimer[0].state == "RUNNING") return res.status(200).json({msg: "Pomodoro già avviato"});
             const [timer] = await databasePool.execute(`
                 INSERT INTO Timer(creation_date, description, duration, user_id, step, state) VALUES (NOW(), ?, ?, ?, ?, "RUNNING")

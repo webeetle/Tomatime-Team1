@@ -3,8 +3,6 @@ import "./index.css";
 import sound from "/src/sounds/done_task.wav";
 import axios from "axios";
 
-
-
 function CentralContainer(props) {
   const { taskInProgress } = props;
   const {clock, toggleClock} = props;
@@ -14,6 +12,7 @@ function CentralContainer(props) {
   const [startSeconds, setStartSeconds] = useState(0);
   const [nextInLineMinutes, setnextInLineMinutes] = useState(0);
   const [timer, setTimer] = useState({});
+
    
   const createTimer = async (user_id) =>{
     const response = await axios.get(`http://localhost:3000/lc/${step}`);
@@ -57,16 +56,18 @@ function CentralContainer(props) {
 
   const onMountDo = async () => {
     console.log("1st")
+
     if(timer.state == "RUNNING") {
       console.log("2nd")
-      await getTimerTime(taskInProgress[0].user_id);
-      const nextStepMinutes = await getTime(step + 1);
+      getTimerTime(taskInProgress[0].user_id);
+      const nextStepMinutes = getTime(step + 1);
       
       changePlay();
-      toggleClock();
+      toggleClock(true);
       setnextInLineMinutes(nextStepMinutes);
     }
-    else if(timer.state != "RUNNING"){
+    
+    if(timer.state != "RUNNING"){
       console.log("3rd")
       const currentStepMinutes = await getTime(step);
       const nextStepMinutes = await getTime(step + 1);
@@ -123,15 +124,6 @@ function CentralContainer(props) {
     onMountDo();
   }, [step, timer]);
 
-  /* const startSeconds = 60;
-   const startMinutes = async () => {
-        return await getTime(step);
-    } */
-  // const startTimer = startMinutes * startSeconds * 1000;
-  /* const nextInLineMinutes = async () => {
-        return await getTime(step + 1);
-    } */
-  
   function changePlay() {
     
     const arrow = document.querySelector("#clickPlay");
@@ -190,13 +182,15 @@ function CentralContainer(props) {
 
       {/* Start button */}
       <button className="play" id="clickPlay" onClick={async () => {
-          changePlay();
-          if(timer == undefined) {
-            await createTimer(taskInProgress[0].user_id);
-            await getTimer(taskInProgress[0].user_id);
+          if(taskInProgress.length > 0){
+            changePlay();
+            if(timer == undefined) {
+              await createTimer(taskInProgress[0].user_id);
+              await getTimer(taskInProgress[0].user_id);
+            }
+            if(timer.state != undefined || timer.state != 'RUNNING' ) await createTimer(taskInProgress[0].user_id); 
+            toggleClock(true);
           }
-          if(timer.state != undefined || timer.state != 'RUNNING' ) await createTimer(taskInProgress[0].user_id); 
-          toggleClock(true);
       }}>
         <div className="circle">
           <div className="variable_arrow"></div>
