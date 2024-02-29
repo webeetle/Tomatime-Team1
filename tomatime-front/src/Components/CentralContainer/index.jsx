@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./index.css";
+import sound from "/src/sounds/done_task.wav";
 import axios from "axios";
 
 async function moveTask(id, userid, target) {
@@ -81,6 +82,10 @@ function CentralContainer(props) {
     tomato.classList.add("tomatoDisappear");
     const navbar = document.querySelector(".navbar");
     navbar.style.zIndex = 2;
+  }
+
+  function playSound() {
+    new Audio(sound).play();
   }
 
   return (
@@ -172,6 +177,8 @@ function CentralContainer(props) {
         <button
           className="right-final"
           onClick={async () => {
+            playSound();
+
             await moveTask(
               taskInProgress[0].id,
               taskInProgress[0].userid,
