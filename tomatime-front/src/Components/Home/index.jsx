@@ -14,7 +14,7 @@ function Home(props) {
 
   const toggleClock = () => {
     setClock(!clock);
-  }
+  };
 
   useEffect(() => {
     fetchTask();
@@ -31,9 +31,9 @@ function Home(props) {
     const response = await axios.get("http://localhost:3000/counter/1");
     const results = response.data;
     setCounters(results);
-  }
+  };
 
-  if (task.todo) {
+  if (task.todo && counters.counters) {
     return (
       <>
         <div className="home-container">
@@ -74,10 +74,10 @@ function Home(props) {
             <div className="container-div">
               <LeftContainer taskList={task.todo[0]} />
 
-              <CentralContainer 
-                  taskInProgress={task.inProgress[0]} 
-                  toggleClock={toggleClock} 
-                  clock={clock}
+              <CentralContainer
+                taskInProgress={task.inProgress[0]}
+                toggleClock={toggleClock}
+                clock={clock}
               />
 
               <RightContainer taskList={task.done[0]} />
