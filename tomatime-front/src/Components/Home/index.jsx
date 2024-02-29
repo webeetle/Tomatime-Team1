@@ -9,16 +9,29 @@ import { Link } from "react-router-dom";
 
 function Home(props) {
   const [task, setTask] = useState({});
+  const [clock, setClock] = useState(false);
+  const [counters, setCounters] = useState({});
+
+  const toggleClock = () => {
+    setClock(!clock);
+  }
+
   useEffect(() => {
     fetchTask();
+    fetchCounters();
   }, []);
 
   const fetchTask = async () => {
-    const response = await axios.get("http://localhost:3000/task/1");
+    const response = await axios.get("http://localhost:3000/task/1"); //next
     const results = response.data;
     setTask(results);
-    console.log(results);
   };
+
+  const fetchCounters = async () => {
+    const response = await axios.get("http://localhost:3000/counter/1");
+    const results = response.data;
+    setCounters(results);
+  }
 
   if (task.todo) {
     return (
@@ -30,19 +43,19 @@ function Home(props) {
               <Counter
                 className={"todoTask"}
                 image="/src/imgs/todoTask.svg"
-                number={0}
+                number={counters.counters[0][0].doneTasks}
                 name={"Task done"}
               />
               <Counter
                 className={"completedTask"}
                 image="/src/imgs/completedTask.svg"
-                number={0}
+                number={counters.counters[1][0].completedTomatoes}
                 name={"Completed"}
               />
               <Counter
                 className={"brokenTask"}
                 image="/src/imgs/brokenTask.svg"
-                number={0}
+                number={counters.counters[2][0].brokeTomatoes}
                 name={"Smashed"}
               />
             </div>
@@ -60,7 +73,13 @@ function Home(props) {
           <div className="main-container">
             <div className="container-div">
               <LeftContainer taskList={task.todo[0]} />
-              <CentralContainer taskInProgress={task.inProgress[0]} />
+
+              <CentralContainer 
+                  taskInProgress={task.inProgress[0]} 
+                  toggleClock={toggleClock} 
+                  clock={clock}
+              />
+
               <RightContainer taskList={task.done[0]} />
             </div>
           </div>

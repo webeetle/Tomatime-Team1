@@ -110,7 +110,6 @@ exports.moveTask = async (req, res) => {
       } 
 
       if(target=="WORKING"){
-        console.log(isWorkingFree(user_id))
         if(await isWorkingFree(user_id)){
           const [move] = await databasePool.execute(`
             UPDATE Task
@@ -141,7 +140,6 @@ exports.deleteTask = async ( req, res ) => {
           const task = await withdraw(id);
           const state = task[0].state;
           const isTODO = state == "TODO" ? true : false;
-          console.log("Prock");
           if(isTODO){
 
               const[task]= await databasePool.execute(
