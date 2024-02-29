@@ -10,6 +10,7 @@
 
 .container-another-list:hover {
   background-color: #eeeeee;
+  border: 1px solid red;
 }
 
 .plus-list {

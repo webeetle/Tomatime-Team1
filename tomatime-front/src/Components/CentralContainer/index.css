@@ -84,11 +84,11 @@ button.broke {
 div.brokenModal {
   display: none;
   position: absolute;
-  top: 50%;
+  top: 46%;
   left: 62.5%;
   transform: translate(-60%, -55%);
   width: 125%;
-  height: 111%;
+  height: 120%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
@@ -250,16 +250,54 @@ button.button-canc-broken {
 
 .left-final {
   color: #d9391e;
-  opacity: 0.5;
+  /* opacity: 0.5; */
   background-color: transparent;
   border: 0px;
   cursor: pointer;
+  word-spacing: 0.2rem;
+  padding: 5px;
+  word-spacing: 0.2rem;
+}
+
+.left-final:hover {
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.left-central-container {
+  display: flex;
+}
+
+.arrow-left-central {
+  width: 1rem;
+  height: 1rem;
+}
+
+.arrow-left-text-central {
 }
 
 .right-final {
   color: #d9391e;
-  opacity: 0.5;
+  /* opacity: 0.5; */
   background-color: transparent;
   border: 0px;
   cursor: pointer;
+  padding: 5px;
+}
+
+.right-final:hover {
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.right-central-container {
+  display: flex;
+}
+
+.arrow-right-central {
+  width: 1rem;
+  height: 1rem;
+}
+
+.arrow-right-text-central {
 }

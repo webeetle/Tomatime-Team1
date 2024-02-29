@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import "./index.css";
 import axios from "axios";
 
-
-async function editTask(editID,editTitle, editDescription){
-  const create = await axios.put(`http://localhost:3000/task/${editID}`, {title: editTitle, description: editDescription});
+async function editTask(editID, editTitle, editDescription) {
+  const create = await axios.put(`http://localhost:3000/task/${editID}`, {
+    title: editTitle,
+    description: editDescription,
+  });
   return window.location.reload();
 }
 
 function ModifyModal(props) {
-  const {id} = props;
+  const { id } = props;
   const [isModifyOpen, setIsModifyOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
 
   const openModifyModal = () => {
     setIsModifyOpen(true);
@@ -37,18 +38,22 @@ function ModifyModal(props) {
                 Are you sure you want to modify this task?
               </span>
             </div>
-            <form action="" on onSubmit={(e) => {
-              e.preventDefault();
-              editTask(id, title, description)
-
-            }}>
+            <form
+              className="form-modify"
+              action=""
+              on
+              onSubmit={(e) => {
+                e.preventDefault();
+                editTask(id, title, description);
+              }}
+            >
               <input
                 type="text"
                 placeholder="Insert Title"
-                value = {title}
+                value={title}
                 className="title-text-modify"
                 onChange={(e) => {
-                  setTitle(e.target.value)
+                  setTitle(e.target.value);
                 }}
                 required
               />
@@ -56,9 +61,9 @@ function ModifyModal(props) {
               <textarea
                 className="compile-text-modify"
                 placeholder="Modify information to the task"
-                value = {description}
+                value={description}
                 onChange={(e) => {
-                  setDescription(e.target.value)
+                  setDescription(e.target.value);
                 }}
               ></textarea>
               <div className="position-button-modify">

@@ -1,8 +1,9 @@
 .popup_register {
   position: absolute;
-  bottom: 20%;
+  /* bottom: 20%; */
   left: 180px;
-  width: 30%;
+  top: 29.5%;
+  width: 35%;
   box-shadow: 0px 3px 10px #00000033;
   border-radius: 32px;
   opacity: 1;
@@ -10,7 +11,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2.5%;
+  /* padding: 2.5%; */
+  padding: 2%;
   width: 20%;
   aspect-ratio: 5/1;
   background-size: 100%;
@@ -24,11 +26,55 @@
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
-.form {
+.form-name-register {
   border: 0px solid black;
   border-bottom: 1px solid black;
   width: 100%;
   height: 50px;
+  font-size: x-large;
+}
+
+.form-name-register::placeholder {
+  color: black;
+  font-size: x-large;
+}
+
+.form-email-register {
+  border: 0px solid black;
+  border-bottom: 1px solid black;
+  width: 100%;
+  height: 50px;
+  font-size: x-large;
+}
+
+.form-email-register::placeholder {
+  color: black;
+  font-size: x-large;
+}
+
+.form-password-register {
+  border: 0px solid black;
+  border-bottom: 1px solid black;
+  width: 100%;
+  height: 50px;
+  font-size: x-large;
+}
+
+.form-password-register::placeholder {
+  color: black;
+  font-size: x-large;
+}
+
+.form-passwordConfirm-register {
+  border: 0px solid black;
+  border-bottom: 1px solid black;
+  width: 100%;
+  height: 50px;
+  font-size: x-large;
+}
+
+.form-passwordConfirm-register::placeholder {
+  color: black;
   font-size: x-large;
 }
 
@@ -42,7 +88,7 @@
 }
 
 .text-check {
-  font-size: small;
+  font-size: xx-small;
 }
 
 .form::placeholder {
@@ -59,22 +105,52 @@ a:hover {
 }
 
 .link {
-  font-size: small;
+  font-size: x-small;
 }
 
-.btn {
+.register_btn.enabled {
   /* UI Properties */
   background-color: #d9391e;
   border-radius: 15px;
   text-align: center;
   cursor: pointer;
   height: 60px;
-  opacity: 30%;
   width: 75%;
   margin: 20px;
+  border: 1px solid black;
 }
 
-.text_btn {
+.register_btn.disabled {
+  background-color: #d9391e;
+  opacity: 30%;
+}
+
+.register_btn.enabled {
+  background-color: #d9391e;
+}
+
+.register_btn.enabled:hover {
+  scale: 1.05;
+}
+
+.text_btn_register {
   color: white;
   font-size: x-large;
+}
+
+.fake_btn_register {
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  height: 60px;
+  /* opacity: 30%; */
+  width: 75%;
+  margin: 20px;
+  border: 1px solid black;
+  background-color: #d9391e;
+  opacity: 30%;
+}
+
+.login-link {
+  text-decoration: underline;
 }

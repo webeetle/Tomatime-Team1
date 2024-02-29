@@ -1,10 +1,10 @@
 .modal-overlay-add {
   position: absolute;
-  top: 50%;
+  top: 46%;
   left: 62.5%;
   transform: translate(-60%, -55%);
   width: 125%;
-  height: 111%;
+  height: 120%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 90;
 }
@@ -22,6 +22,8 @@
   border-radius: 15px;
   width: 50%;
   height: 50%;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-title-add {
@@ -98,7 +100,8 @@ input.title-text-add {
   justify-content: space-between;
   width: 50%;
   margin-left: auto;
-  margin-top: 2rem;
+  margin-top: auto;
+  margin-bottom: 0.75rem;
 }
 
 .button-cancel-add {
