@@ -4,17 +4,16 @@ const databasePool = require("../db.js");
 async function setComplete(id){
     const[complete]=await databasePool.query(
         "UPDATE Timer SET description='COMPLETED' WHERE id = ?", 
-    [lastTimer[0].id]
-    );
+    [id]);
     return complete;
 }
 
 async function getLastTimer(user_id) {
     const [lastTimer] = await databasePool.query(`
-        SELECT * FROM Timer 
+        SELECT * FROM Timer
         WHERE id=(SELECT MAX(id) FROM Timer WHERE user_id=?)` ,[user_id]
     );
-    return [lastTimer];
+    return lastTimer;
 }
 
 exports.getTimer = async (req, res) => {
@@ -73,15 +72,16 @@ exports.startTimer = async (req, res) => {
 
     if(user_id && duration && step && description){
         try{
-            const lastTimer = await getLastTimer(user_id);
-            if (lastTimer[0].state == "RUNNING") return res.status(200).json({msg: "Pomodoro già avviato"});
+            const [lastTimer] = await databasePool.query("SELECT * FROM Timer WHERE id=(SELECT MAX(id) FROM Timer WHERE user_id = ?)", [user_id]);
+            console.log(lastTimer);
+            if(lastTimer.length > 0) if (lastTimer[0].state == "RUNNING") return res.status(200).json({msg: "Pomodoro già avviato"});
             const [timer] = await databasePool.execute(`
                 INSERT INTO Timer(creation_date, description, duration, user_id, step, state) VALUES (NOW(), ?, ?, ?, ?, "RUNNING")
             `, [description, duration, user_id, step]);
             return res.status(200).json({msg: "pomodoro creato", timer});
         }catch(err){
             console.error(err);
-            res.sendStatus(500);
+            return res.sendStatus(500);
         }
     } return res.status(400).json({msg: "informazioni mancanti"});
 }
@@ -91,43 +91,35 @@ exports.completeTimer = async (req, res) => {
     if(user_id){
         try {
             const [lastTimer] = await getLastTimer(user_id);
-            console.log(lastTimer);
-                /* await databasePool.query(`
-                SELECT * FROM Timer 
-                WHERE id=(SELECT MAX(id) FROM Timer WHERE user_id = ?)`,
-                [user_id]); */
-            
+
             if(lastTimer[0].state != undefined){
                 if(lastTimer[0].state == "RUNNING"){
                     const lastTimerDate = lastTimer[0].creation_date;
                     const timeDifference = Math.abs(lastTimerDate.getTime() - new Date().getTime()) / 1000
-                    if ((timeDifference / 60) == lastTimer.duration){
+                    if ((timeDifference / 60) >= lastTimer.duration){
                         await setComplete(lastTimer[0].id);
                         return res.status(200).json({msg: "Pomodoro completato"});
-                    }
+                    } return res.status(200).json({msg: "Il pomodoro non è ancora finito"})
                 }
             } else return res.status(200).json({msg: "Nessun pomodoro iniziato"});
         } catch (err) {
             console.error(err);
             return res.sendStatus(500);
         }
-    }return res.status(400).json({msg: "informazioni mancanti"});
+    } return res.status(400).json({msg: "informazioni mancanti"});
 }
 
 exports.stopTimer = async (req, res) => {
     const id = req.params.id;
-    console.log(id)
-    var [state] = await databasePool.query("SELECT state FROM Timer WHERE id=(SELECT MAX(id) FROM Timer WHERE user_id = ?)", [id]);
+    const [lastTimer] = await databasePool.query("SELECT * FROM Timer WHERE id=(SELECT MAX(id) FROM Timer WHERE user_id = ?)", [id]);
     if (id){
         try{
-
-            const isRUNNING = (state == "RUNNING") ? true : false;
-            if(isRUNNING) {
+            if(lastTimer[0].state == "RUNNING") {
                 const[timer] = await databasePool.execute ( 
-                    `UPDATE Timer SET state = 'BROKEN' WHERE id = ?`, [id] 
+                    `UPDATE Timer SET state = "BROKEN" WHERE id = ?`, [lastTimer[0].id]
                 );
-                return res.status(200).json({msg: "Pomodoro rotto con successo!"})
-            } return res.status(200).json({msg: "Timer non avviato"})
+                return res.status(200).json({msg: "Pomodoro rotto con successo!", timer})
+            } return res.status(400).json({msg: "Timer non avviato"})
         } catch (err) {
             console.error(err);
             return res.sendStatus(500);
