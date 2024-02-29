@@ -35,7 +35,7 @@ function CentralContainer(props) {
     return results[0].duration;
   }
 
-  async function getTimerTime(user_id){
+  const getTimerTime = async (user_id) => {
     try{
       const response = await axios.get(`http://localhost:3000/timer/time/${user_id}`);
       setStartMinutes(response.data.minutes);
@@ -55,22 +55,27 @@ function CentralContainer(props) {
   }
 
   const onMountDo = async () => {
-    if(timer == undefined) await getTimer(taskInProgress[0].user_id);
+    if(timer.state == undefined) await getTimer(taskInProgress[0].user_id);
+    console.log("1st")
+    await getTimerTime(taskInProgress[0].user_id);
     if(timer.state == "RUNNING") {
-      await getTimerTime(1);
+      console.log("2nd")
+      changePlay();
+      toggleClock();
       setnextInLineMinutes(await getTime(step + 1));
     }
     else {
+      console.log("3rd")
       setStartMinutes(await getTime(step));
       setStartSeconds(0);
       setnextInLineMinutes(await getTime(step+1));
     }
-    return
   }
 
   const stopTimer = async () => {
-    await axios.put(`http://localhost:3000/timer/${timer.id}`);
-    if (step != 1) setStep(1);
+    await getTimer();
+    await axios.put(`http://localhost:3000/timer/${taskInProgress[0].user_id}`);
+    setStep(1);
   }
 
   const completeTomato = async () => {
@@ -79,7 +84,16 @@ function CentralContainer(props) {
     else setStep(step + 1);
   }
 
+  const resetTimer = async () => {
+    const minutes = await getTime(step);
+    setStartMinutes(minutes);
+    setStartSeconds(0);
+  }
+
   useEffect(() => {
+
+    if(!clock) getTimerTime(taskInProgress[0].user_id);
+
     let interval = null;
 
     if(clock && (startSeconds || startMinutes) ) { 
@@ -90,14 +104,12 @@ function CentralContainer(props) {
           setStartSeconds(59);
       }
     }, 1000)
-    } 
+    } else if(clock && !startSeconds && !startMinutes) completeTomato();
     else {
       clearInterval(interval);
-      completeTomato();
     }
     
     return () => {
-      console.log("Prova");
       clearInterval(interval);
     }
   }, [clock, startSeconds, startMinutes])
@@ -116,11 +128,6 @@ function CentralContainer(props) {
   /* const nextInLineMinutes = async () => {
         return await getTime(step + 1);
     } */
-
-  let minutesToDisplay = startMinutes //startTimer / 1000 / startSeconds;
-  let secondsToDisplay =  startSeconds //(startTimer / 1000 / startMinutes) % 60;
-  if (secondsToDisplay < 10) secondsToDisplay = "0" + secondsToDisplay;
-
   
   function changePlay() {
     
@@ -169,13 +176,13 @@ function CentralContainer(props) {
 
       {/* Start button */}
       <button className="play" id="clickPlay" onClick={async () => {
-        changePlay();
-        if(timer == undefined) {
-          await createTimer(taskInProgress[0].user_id);
-          await getTimer(taskInProgress[0].user_id);
-        }
-        if(timer.state != undefined || timer.state != 'RUNNING' ) await createTimer(taskInProgress[0].user_id); 
-        toggleClock(true);
+          changePlay();
+          if(timer == undefined) {
+            await createTimer(taskInProgress[0].user_id);
+            await getTimer(taskInProgress[0].user_id);
+          }
+          if(timer.state != undefined || timer.state != 'RUNNING' ) await createTimer(taskInProgress[0].user_id); 
+          toggleClock(true);
       }}>
         <div className="circle">
           <div className="variable_arrow"></div>
@@ -187,6 +194,7 @@ function CentralContainer(props) {
         changeBroken();
         toggleClock(false);
         await stopTimer();
+        await resetTimer();
       }}>
         <div className="circle">
           <div className="variable_broke"></div>
