@@ -5,6 +5,7 @@ import axios from "axios";
 import LeftContainer from "../LeftContainer";
 import CentralContainer from "../CentralContainer";
 import RightContainer from "../RightContainer";
+import { Link } from "react-router-dom";
 
 function Home(props) {
   const [task, setTask] = useState({});
@@ -36,19 +37,31 @@ function Home(props) {
                 className={"todoTask"}
                 image="/src/imgs/todoTask.svg"
                 number={0}
+                name={"Task done"}
               />
               <Counter
                 className={"completedTask"}
                 image="/src/imgs/completedTask.svg"
                 number={0}
+                name={"Completed"}
               />
               <Counter
                 className={"brokenTask"}
                 image="/src/imgs/brokenTask.svg"
                 number={0}
+                name={"Smashed"}
               />
             </div>
-            <div className="img-icon"></div>
+            <div className="img-icon">
+              <div className="edit-profile">
+                <span className="edit-profile-title">Edit profile</span>
+                <Link to="/">
+                  <button className="edit-profile-button">
+                    <span className="edit-profile-button-text">LOGOUT</span>
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
           <div className="main-container">
             <div className="container-div">

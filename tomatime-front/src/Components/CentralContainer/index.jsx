@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./index.css";
+import sound from "/src/sounds/done_task.wav";
 import axios from "axios";
 
 
@@ -144,11 +145,17 @@ function CentralContainer(props) {
   function changeBroken() {
     const modal = document.querySelector("#clickModal");
     modal.style.display = "block";
+
+    const navbar = document.querySelector(".navbar");
+    navbar.style.zIndex = 0;
   }
 
   function returnTomato() {
     const modal = document.querySelector("#clickModal");
     modal.style.display = "none";
+
+    const navbar = document.querySelector(".navbar");
+    navbar.style.zIndex = 2;
   }
 
   function brokeTomato() {
@@ -161,6 +168,12 @@ function CentralContainer(props) {
     arrow.style.display = "block";
     tomato.classList.remove("tomatoAppear");
     tomato.classList.add("tomatoDisappear");
+    const navbar = document.querySelector(".navbar");
+    navbar.style.zIndex = 2;
+  }
+
+  function playSound() {
+    new Audio(sound).play();
   }
 
   return (
@@ -266,6 +279,8 @@ function CentralContainer(props) {
         <button
           className="right-final"
           onClick={async () => {
+            playSound();
+
             await moveTask(
               taskInProgress[0].id,
               taskInProgress[0].userid,

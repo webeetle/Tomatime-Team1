@@ -22,10 +22,14 @@ function AddModal(props) {
 
   const openAddModal = () => {
     setIsAddOpen(true);
+    const navbar = document.querySelector(".navbar");
+    navbar.style.zIndex = 0;
   };
 
   const closeAddModal = () => {
     setIsAddOpen(false);
+    const navbar = document.querySelector(".navbar");
+    navbar.style.zIndex = 2;
   };
 
   return (

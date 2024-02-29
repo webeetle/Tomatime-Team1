@@ -16,11 +16,15 @@ function ToDoList(props) {
   const [isWriteOpen, setIsWriteOpen] = useState(false);
   const openWriteModal = () => {
     setIsWriteOpen(true);
+    const navbar = document.querySelector(".navbar");
+    navbar.style.zIndex = 0;
   };
 
   const closeWriteModal = (e) => {
     e.stopPropagation();
     setIsWriteOpen(false);
+    const navbar = document.querySelector(".navbar");
+    navbar.style.zIndex = 2;
   };
 
   return (
