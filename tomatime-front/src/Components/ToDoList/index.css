@@ -5,6 +5,7 @@
   width: 100%;
   border-radius: 8px;
   margin-bottom: 1rem;
+  margin-top: 2rem;
 }
 
 .container-two-elements-todo:hover {
@@ -52,8 +53,8 @@
 .arrow-move-label {
   display: none;
   position: absolute;
-  bottom: 35px;
-  right: -30px;
+  bottom: 30px;
+  right: -10px;
   white-space: nowrap;
 }
 

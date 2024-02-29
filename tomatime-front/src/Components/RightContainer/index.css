@@ -1,8 +1,13 @@
 .right-container {
   width: 35%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .title-right {
   font-size: x-large;
   color: #ffde59;
+  position: fixed;
+  background-color: white;
+  width: 30%;
 }

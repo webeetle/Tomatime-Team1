@@ -1,9 +1,13 @@
-
 .left-container {
-    width: 35%;
-  }
-  
-  .title-left {
-    font-size: x-large;
-    color: #d9391e;
-  }
+  width: 35%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.title-left {
+  font-size: x-large;
+  color: #d9391e;
+  position: fixed;
+  background-color: white;
+  width: 30%;
+}
