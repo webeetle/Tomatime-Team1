@@ -58,7 +58,6 @@
   padding: 0.75rem;
   gap: 0.8rem;
   box-shadow: 0px 3px 6px #00000029;
-
   opacity: 0;
   transition: opacity 200ms ease-in;
 }
@@ -84,6 +83,7 @@ button.edit-profile-button {
   font-weight: bold;
   margin-left: auto;
   margin-right: auto;
+  padding: 0.25rem;
 }
 
 .main-container {
