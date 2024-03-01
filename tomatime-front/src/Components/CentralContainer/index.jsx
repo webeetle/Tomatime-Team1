@@ -5,7 +5,7 @@ import axios from "axios";
 
 function CentralContainer(props) {
   const { taskInProgress } = props;
-  const {clock, toggleClock} = props;
+  const { clock, toggleClock } = props;
 
   const [step, setStep] = useState(1);
   const [startMinutes, setStartMinutes] = useState(0);
@@ -13,62 +13,67 @@ function CentralContainer(props) {
   const [nextInLineMinutes, setnextInLineMinutes] = useState(0);
   const [timer, setTimer] = useState({});
 
-   
-  const createTimer = async (user_id) =>{
+  const createTimer = async (user_id) => {
     const response = await axios.get(`http://localhost:3000/lc/${step}`);
     const lifecycle = response.data[0];
-    const {duration, description} = lifecycle;
-    await axios.post(`http://localhost:3000/timer/${user_id}`, {step, duration, description});
-  }
+    const { duration, description } = lifecycle;
+    await axios.post(`http://localhost:3000/timer/${user_id}`, {
+      step,
+      duration,
+      description,
+    });
+  };
 
   async function moveTask(id, userid, target) {
-    const response = await axios.put(`http://localhost:3000/task/move/${id}`, {
+    await axios.put(`http://localhost:3000/task/move/${id}`, {
       target,
       userid,
     });
-    return;
   }
-  
+
   const getTime = async (id) => {
     const response = await axios.get(`http://localhost:3000/lc/${id}`);
     const results = response.data;
     return results[0].duration;
-  }
+  };
 
   const getTimerTime = async (user_id) => {
-    try{
-      const response = await axios.get(`http://localhost:3000/timer/time/${user_id}`);
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/timer/time/${user_id}`
+      );
       setStartMinutes(response.data.minutes);
       setStartSeconds(response.data.seconds);
-      return
-    }catch(err){
+      return;
+    } catch (err) {
       console.error(err.response.data.msg);
-      if(err.response.data.msg == "Il pomodoro è completato") return setStep(step+1);
+      if (err.response.data.msg == "Il pomodoro è completato")
+        return setStep(step + 1);
       return setStep(1);
     }
-  }
+  };
 
   const getTimer = async (user_id) => {
     const response = await axios.get(`http://localhost:3000/timer/${user_id}`);
     const results = response.data;
     setTimer(results[0]);
-  }
+  };
 
   const onMountDo = async () => {
-    console.log("1st")
+    console.log("1st");
 
-    if(timer.state == "RUNNING") {
-      console.log("2nd")
+    if (timer.state == "RUNNING") {
+      console.log("2nd");
       getTimerTime(taskInProgress[0].user_id);
       const nextStepMinutes = getTime(step + 1);
-      
+
       changePlay();
       toggleClock(true);
       setnextInLineMinutes(nextStepMinutes);
     }
-    
-    if(timer.state != "RUNNING"){
-      console.log("3rd")
+
+    if (timer.state != "RUNNING") {
+      console.log("3rd");
       const currentStepMinutes = await getTime(step);
       const nextStepMinutes = await getTime(step + 1);
 
@@ -76,61 +81,61 @@ function CentralContainer(props) {
       setStartSeconds(0);
       setnextInLineMinutes(nextStepMinutes);
     } else {
-      if(timer == undefined) return;
-      if(timer == {}) await getTimer(taskInProgress[0].user_id);
+      if (timer == undefined) return;
+      if (timer == {}) await getTimer(taskInProgress[0].user_id);
     }
-  }
+  };
 
   const stopTimer = async () => {
     console.log(taskInProgress[0].user_id);
     await axios.put(`http://localhost:3000/timer/${taskInProgress[0].user_id}`);
     setStep(1);
-  }
+  };
 
   const completeTomato = async () => {
-    await axios.put(`http://localhost:3000/timer/complete/${taskInProgress[0].user_id}`);
-    if(step == 6) setStep(1);
-  }
+    await axios.put(
+      `http://localhost:3000/timer/complete/${taskInProgress[0].user_id}`
+    );
+    if (step == 6) setStep(1);
+  };
 
   const resetTimer = async () => {
     const minutes = await getTime(1);
     setStartMinutes(minutes);
     setStartSeconds(0);
-  }
+  };
 
   useEffect(() => {
     let interval = null;
-    if(clock && (startSeconds || startMinutes) ) { 
+    if (clock && (startSeconds || startMinutes)) {
       interval = setInterval(() => {
-        if(startSeconds != 0) setStartSeconds(startSeconds - 1);
-        else{
+        if (startSeconds != 0) setStartSeconds(startSeconds - 1);
+        else {
           setStartMinutes(startMinutes - 1);
           setStartSeconds(59);
-      }
-    }, 1000)
-    } else if(clock && !startSeconds && !startMinutes) completeTomato();
+        }
+      }, 1000);
+    } else if (clock && !startSeconds && !startMinutes) completeTomato();
     else {
       clearInterval(interval);
     }
-    
+
     return () => {
       clearInterval(interval);
-    }
-  }, [clock, startSeconds, startMinutes])
-  
+    };
+  }, [clock, startSeconds, startMinutes]);
 
   useEffect(() => {
-    if(step == 7) setStep(1);
+    if (step == 7) setStep(1);
     onMountDo();
   }, [step, timer]);
 
   function changePlay() {
-    
     const arrow = document.querySelector("#clickPlay");
     const broke = document.querySelector("#clickBroken");
     const tomato = document.querySelector("#tomato");
     arrow.style.display = "none";
-    broke.style.display = "block";  
+    broke.style.display = "block";
     tomato.classList.remove("tomatoDisappear");
     tomato.classList.add("tomatoAppear");
   }
@@ -163,6 +168,7 @@ function CentralContainer(props) {
     tomato.classList.add("tomatoDisappear");
     const navbar = document.querySelector(".navbar");
     navbar.style.zIndex = 2;
+    setTimeout(() => window.location.reload());
   }
 
   function playSound() {
@@ -170,40 +176,48 @@ function CentralContainer(props) {
   }
 
   return (
-
     <div className="central-container">
       <span className="title-center">TIME TO FOCUS</span>
       <span className="timer">
-        {startMinutes}:{startSeconds < 10 ? (`0${startSeconds}`) : startSeconds }
+        {startMinutes}:{startSeconds < 10 ? `0${startSeconds}` : startSeconds}
       </span>
       <span className="subtitle-center">
         NEXT: SHORT BREAK (+{nextInLineMinutes} MIN)
       </span>
 
       {/* Start button */}
-      <button className="play" id="clickPlay" onClick={async () => {
-          if(taskInProgress.length > 0){
+      <button
+        className="play"
+        id="clickPlay"
+        onClick={async () => {
+          if (taskInProgress.length > 0) {
             changePlay();
-            if(timer == undefined) {
+            if (timer == undefined) {
               await createTimer(taskInProgress[0].user_id);
               await getTimer(taskInProgress[0].user_id);
             }
-            if(timer.state != undefined || timer.state != 'RUNNING' ) await createTimer(taskInProgress[0].user_id); 
+            if (timer.state != undefined || timer.state != "RUNNING")
+              await createTimer(taskInProgress[0].user_id);
             toggleClock(true);
           }
-      }}>
+        }}
+      >
         <div className="circle">
           <div className="variable_arrow"></div>
         </div>
       </button>
 
       {/* Broke button */}
-      <button className="broke" id="clickBroken" onClick={async () => {
-        changeBroken();
-        toggleClock(false);
-        await stopTimer();
-        await resetTimer();
-      }}>
+      <button
+        className="broke"
+        id="clickBroken"
+        onClick={async () => {
+          changeBroken();
+          toggleClock(false);
+          await stopTimer();
+          await resetTimer();
+        }}
+      >
         <div className="circle">
           <div className="variable_broke"></div>
         </div>
@@ -274,14 +288,17 @@ function CentralContainer(props) {
         <button
           className="right-final"
           onClick={async () => {
-            playSound();
+            if (taskInProgress?.length > 0) {
+              playSound();
 
-            await moveTask(
-              taskInProgress[0].id,
-              taskInProgress[0].userid,
-              "DONE"
-            );
-            return window.location.reload();
+              await moveTask(
+                taskInProgress[0].id,
+                taskInProgress[0].userid,
+                "DONE"
+              );
+
+              setTimeout(() => window.location.reload(), 1000);
+            }
           }}
         >
           <span>
