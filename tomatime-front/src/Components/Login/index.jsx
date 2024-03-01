@@ -9,6 +9,7 @@ function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const [canLogin, setCanLogin] = useState(false);
 
   const message = () => {
     alert("Non tutti i campi sono stati compilati");
@@ -32,11 +33,11 @@ function Login() {
     }
   };
 
-  /* const login = async (username, password) => {
-    const response = await axios.post("http://localhost:3000/user/login", {username, password});
-    const results = response.data
-    return results.canLogin;
-  } */
+  const login = async () => {
+    const response = await axios.post("http://localhost:3000/user/login", {username: name, password});
+    const results = response.data;
+    return results.canLogin ? setCanLogin(results.canLogin) : alert("Nome utente o password errati");
+  }
 
 
   return (
@@ -65,8 +66,10 @@ function Login() {
 
         {isButtonEnabled ? (
           
-            <button className="login_btn enabled">
-              <Link to={ "/home"/* login() ? "/home" : "" */}>
+            <button className="login_btn enabled" onClick={() => {
+              login();
+            }}>
+              <Link to={ canLogin ? "/home" : ""}>
                 <span className="text_btn_login">LOGIN</span>
               </Link>
             </button>

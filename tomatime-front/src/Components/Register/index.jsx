@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./index.css";
 import { Link } from "react-router-dom";
 import BackGround from "../BackGround";
+import axios from "axios";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -34,6 +35,17 @@ const Register = () => {
     checkButtonStatusRegister(name, email, password, e.target.value);
   };
 
+  const register = async () => {
+    const response = await axios.post("http://localhost:3000/user/register",
+      {
+        username: name,
+        email, 
+        password
+      }
+    );
+    alert("Registrato con successo");
+  } 
+
   const checkButtonStatusRegister = (
     name,
     email,
@@ -44,9 +56,10 @@ const Register = () => {
       name.length > 0 &&
       email.length > 0 &&
       password.length > 0 &&
-      passwordConfirm.length > 0
+      passwordConfirm.length > 0     
     ) {
       setIsButtonEnabled(true);
+
     } else {
       setIsButtonEnabled(false);
     }
@@ -70,7 +83,6 @@ const Register = () => {
             type="text"
             placeholder="Email"
             onChange={(e) => handleEmailChangeRegister(e)}
-            ù
             autoComplete="off"
             className="form-email-register"
           ></input>
@@ -97,7 +109,10 @@ const Register = () => {
         </div>
 
         {isButtonEnabled ? (
-          <button className="register_btn enabled">
+          <button className="register_btn enabled" onClick={() => {
+            if(password == passwordConfirm) register();
+            else alert("La password deve corrispondere al campo di conferma della password");
+          }}>
             <Link to="/login">
               <span className="text_btn_register">SIGN IN</span>
             </Link>

@@ -3,7 +3,7 @@ const databasePool = require("../db.js");
 
 async function setComplete(id){
     const[complete]=await databasePool.query(
-        "UPDATE Timer SET description='COMPLETED' WHERE id = ?", 
+        "UPDATE Timer SET state='COMPLETED' WHERE id = ?", 
     [id]);
     return complete;
 }
@@ -90,13 +90,12 @@ exports.completeTimer = async (req, res) => {
     if(user_id){
         try {
             const [lastTimer] = await getLastTimer(user_id);
-
-            if(lastTimer[0].state != undefined){
-                if(lastTimer[0].state == "RUNNING"){
-                    const lastTimerDate = lastTimer[0].creation_date;
+            if(lastTimer.state){
+                if(lastTimer.state == "RUNNING"){
+                    const lastTimerDate = lastTimer.creation_date;
                     const timeDifference = Math.abs(lastTimerDate.getTime() - new Date().getTime()) / 1000
                     if ((timeDifference / 60) >= lastTimer.duration){
-                        await setComplete(lastTimer[0].id);
+                        await setComplete(lastTimer.id);
                         return res.status(200).json({msg: "Pomodoro completato"});
                     } return res.status(200).json({msg: "Il pomodoro non è ancora finito"})
                 }

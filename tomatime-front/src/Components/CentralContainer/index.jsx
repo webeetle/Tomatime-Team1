@@ -60,10 +60,8 @@ function CentralContainer(props) {
   };
 
   const onMountDo = async () => {
-    console.log("1st");
 
     if (timer.state == "RUNNING") {
-      console.log("2nd");
       getTimerTime(taskInProgress[0].user_id);
       const nextStepMinutes = getTime(step + 1);
 
@@ -73,7 +71,6 @@ function CentralContainer(props) {
     }
 
     if (timer.state != "RUNNING") {
-      console.log("3rd");
       const currentStepMinutes = await getTime(step);
       const nextStepMinutes = await getTime(step + 1);
 
@@ -87,15 +84,12 @@ function CentralContainer(props) {
   };
 
   const stopTimer = async () => {
-    console.log(taskInProgress[0].user_id);
     await axios.put(`http://localhost:3000/timer/${taskInProgress[0].user_id}`);
     setStep(1);
   };
 
   const completeTomato = async () => {
-    await axios.put(
-      `http://localhost:3000/timer/complete/${taskInProgress[0].user_id}`
-    );
+    await axios.put(`http://localhost:3000/timer/complete/${taskInProgress[0].user_id}`);
     if (step == 6) setStep(1);
   };
 

@@ -28,14 +28,17 @@ exports.login = async (req, res) => {
                 WHERE username = ?
                 AND password = ?
             `, [username, password]);
+
         if(user.length > 0){
             return res.status(200).json({
                 msg: `Bentornato ${user[0].username}`,
-                canLogin: true,
+                canLogin: true
+                
+                ,
                 user
             })
         }
-        return res.status(400).json({
+        return res.status(200).json({
             msg: "Nome utente o password errati!",
             canLogin: false,
             user
